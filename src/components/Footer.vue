@@ -4,7 +4,7 @@
       <div class="footer-brand">
         <a href="#" class="logo">
           <span class="logo-accent">&lt;</span>WM<span class="logo-accent"> /&gt;</span>
-          <span class="logo-text">Wojciech Mańkowski</span>
+          <span class="logo-text">Wojciech Mankowski</span>
         </a>
         <p>Budowanie nowoczesnej efektywności operacyjnej za pomocą Microsoft Power Platform.</p>
       </div>
@@ -18,7 +18,7 @@
         </ul>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Wojciech Mańkowski. Wszelkie prawa zastrzeżone.</p>
+        <p>&copy; 2026 Wojciech Mankowski. Wszelkie prawa zastrzeżone.</p>
         <div class="footer-socials">
           <a href="https://linkedin.com/in/wojciechmankowski" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>

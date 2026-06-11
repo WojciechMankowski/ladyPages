@@ -77,7 +77,7 @@ onUnmounted(() => {
     <div class="container header-container">
       <a href="#" class="logo" @click="closeMenu">
         <span class="logo-accent">&lt;</span>WM<span class="logo-accent"> /&gt;</span>
-        <span class="logo-text">Wojciech Mańkowski</span>
+        <span class="logo-text">Wojciech Mankowski</span>
       </a>
       
       <nav :class="['main-nav', { active: isMenuOpen }]" id="mainNav">
