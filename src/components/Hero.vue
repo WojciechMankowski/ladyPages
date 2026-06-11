@@ -46,7 +46,7 @@ const handleSubscribe = () => {
           <span class="text-gradient">Bez działu IT.</span>
         </h1>
         <p class="hero-subtitle fade-in">
-          Power Automate to narzędzie, które <strong>już masz</strong> w pakiecie Microsoft 365, tylko nikt Ci nie pokazał, jak je włączyć. Zapisz się, a dostaniesz darmowy ebook „Automatyzacja w biurze bez IT”: 5 gotowych przepływów, które wdrożysz w jeden dzień, bez ani jednej linijki kodu.
+          Power Automate to narzędzie, które <strong>już masz</strong> w pakiecie Microsoft 365, tylko nikt Ci nie pokazał, jak je włączyć. Zapisz się, a dostaniesz darmowy ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji”: 5 gotowych przepływów, które wdrożysz w jeden dzień, bez ani jednej linijki kodu.
         </p>
         
         <!-- Formularz Zapisu w Sekcji Hero -->

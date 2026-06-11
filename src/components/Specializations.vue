@@ -14,7 +14,7 @@ import {
     <div class="container">
       <div class="section-header">
         <span class="section-tag">Zawartość Ebooka</span>
-        <h2 class="section-title">Ebook „Automatyzacja w biurze bez IT”</h2>
+        <h2 class="section-title">Ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji”</h2>
         <p class="section-desc">Pokażę Ci, jak krok po kroku wdrożyć 5 praktycznych przepływów, które przejmą Twoje najnudniejsze, codzienne obowiązki.</p>
       </div>
       

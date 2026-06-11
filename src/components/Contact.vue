@@ -77,7 +77,7 @@ const faqItems = [
         <span class="section-tag text-purple" style="margin-bottom: 10px;">Zacznij dzisiaj</span>
         <h3 class="final-cta-title">Pierwszy przepływ możesz mieć gotowy jeszcze dziś.</h3>
         <p class="final-cta-desc" style="margin-bottom: 25px;">
-          Zostaw swoje imię i adres e-mail. Ebook „Automatyzacja w biurze bez IT” wyląduje w Twojej skrzynce za kilka minut.
+          Zostaw swoje imię i adres e-mail. Ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji” wyląduje w Twojej skrzynce za kilka minut.
         </p>
         
         <form class="contact-form" @submit.prevent="handleSubscribeFinal">
