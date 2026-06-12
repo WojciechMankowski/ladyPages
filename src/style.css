@@ -1376,10 +1376,7 @@ html.light .glow-card {
     border-color: rgba(15, 23, 42, 0.08);
 }
 
-html.light .testimonial-box {
-    background: rgba(139, 92, 246, 0.02);
-    border-color: rgba(139, 92, 246, 0.15);
-}
+
 
 html.light .faq-item {
     background: rgba(15, 23, 42, 0.01);

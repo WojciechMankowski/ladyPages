@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ShieldCheck, MessageSquare } from '@lucide/vue';
+import { ShieldCheck } from '@lucide/vue';
 import avatar from '../assets/avatar.png';
 </script>
 
@@ -25,17 +25,7 @@ import avatar from '../assets/avatar.png';
         <p class="about-text">
           Moja misja jest prosta: <strong>chcę pomóc Ci odzyskać Twój czas</strong>. Nie pokażę Ci niczego, czego sam bym nie przetestował w boju. I obiecuję: w moich materiałach nie znajdziesz ani jednego słowa trudnego żargonu IT, którego nie zrozumiałaby Twoja koleżanka z działu księgowości czy administracji.
         </p>
-        
-        <!-- Social Proof Quote / Testimonial -->
-        <div class="testimonial-box">
-          <div class="quote-icon-wrapper">
-            <MessageSquare class="quote-icon" />
-          </div>
-          <blockquote class="quote-text">
-            „Te same przepływy, które Wojciech opisuje w ebooku, oszczędzają mi ponad 8 godzin pracy w każdym tygodniu. Przestałam bać się Power Automate, bo wreszcie ktoś wyjaśnił to po ludzku, na życiowych przykładach z Excela!”
-          </blockquote>
-          <cite class="quote-author">- Krystyna, Specjalistka ds. Administracji i Kadr</cite>
-        </div>
+
 
         <div class="certifications-list">
           <div class="cert-item">
@@ -49,42 +39,6 @@ import avatar from '../assets/avatar.png';
 </template>
 
 <style scoped>
-.testimonial-box {
-  margin-top: 30px;
-  background: rgba(139, 92, 246, 0.03);
-  border: 1px dashed rgba(139, 92, 246, 0.2);
-  border-radius: var(--border-radius-md);
-  padding: 25px;
-  position: relative;
-  width: 100%;
-}
-
-.quote-icon-wrapper {
-  color: var(--primary);
-  opacity: 0.3;
-  margin-bottom: 10px;
-}
-
-.quote-icon {
-  width: 24px;
-  height: 24px;
-}
-
-.quote-text {
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--text-primary);
-  line-height: 1.6;
-  margin-bottom: 12px;
-}
-
-.quote-author {
-  font-size: 0.85rem;
-  font-family: var(--font-heading);
-  font-weight: 600;
-  color: var(--text-muted);
-  display: block;
-}
 
 .certifications-list {
   margin-top: 20px;
