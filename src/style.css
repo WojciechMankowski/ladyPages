@@ -1424,6 +1424,27 @@ html.light .nav-link:hover {
     color: #0f172a;
 }
 
+html.light .main-header {
+    background: rgba(255, 255, 255, 0.4);
+    border-bottom-color: rgba(15, 23, 42, 0.05);
+}
+
+html.light .main-header.scrolled {
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+html.light .stats-bar {
+    background: rgba(255, 255, 255, 0.55);
+    border-top-color: rgba(15, 23, 42, 0.08);
+    border-bottom-color: rgba(15, 23, 42, 0.08);
+}
+
+html.light .cert-item {
+    background: rgba(15, 23, 42, 0.02);
+}
+
+
 /* Theme Toggle Button Styling */
 .theme-toggle {
     background: transparent;
