@@ -1,34 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Loader, HelpCircle } from '@lucide/vue';
+import { useSubscribe } from '../composables/useSubscribe';
 
-const name = ref('');
-const email = ref('');
-const isSubmitting = ref(false);
-const statusMessage = ref('');
-const statusType = ref<'success' | 'error' | ''>('');
-
-const handleSubscribeFinal = () => {
-  if (!name.value || !email.value) {
-    statusMessage.value = 'Proszę wypełnić oba pola.';
-    statusType.value = 'error';
-    return;
-  }
-  
-  isSubmitting.value = true;
-  statusMessage.value = '';
-  statusType.value = '';
-  
-  setTimeout(() => {
-    isSubmitting.value = false;
-    statusMessage.value = 'Gotowe! Sprawdź skrzynkę. Ebook już leci. Jakby nie dotarł w 5 minut, zajrzyj do folderu Oferty/Spam.';
-    statusType.value = 'success';
-    
-    // Reset formularza
-    name.value = '';
-    email.value = '';
-  }, 1500);
-};
+const {
+  name,
+  email,
+  nameError,
+  emailError,
+  isSubmitting,
+  statusMessage,
+  statusType,
+  subscribe: handleSubscribeFinal
+} = useSubscribe();
 
 const faqItems = [
   {
@@ -83,11 +66,13 @@ const faqItems = [
         <form class="contact-form" @submit.prevent="handleSubscribeFinal">
           <div class="form-group">
             <label for="final-name">Imię</label>
-            <input type="text" id="final-name" v-model="name" required placeholder="np. Krystyna" :disabled="isSubmitting">
+            <input type="text" id="final-name" v-model="name" required placeholder="np. Krystyna" :disabled="isSubmitting" :class="{ 'input-error': nameError }">
+            <span class="field-error" v-if="nameError">{{ nameError }}</span>
           </div>
           <div class="form-group">
             <label for="final-email">Adres e-mail służbowy</label>
-            <input type="email" id="final-email" v-model="email" required placeholder="np. krystyna@firma.pl" :disabled="isSubmitting">
+            <input type="email" id="final-email" v-model="email" required placeholder="np. krystyna@firma.pl" :disabled="isSubmitting" :class="{ 'input-error': emailError }">
+            <span class="field-error" v-if="emailError">{{ emailError }}</span>
           </div>
           
           <button type="submit" class="btn btn-primary btn-block" id="btn-submit" :disabled="isSubmitting" style="margin-top: 10px;">

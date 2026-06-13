@@ -1083,6 +1083,30 @@ section {
     box-shadow: 0 0 10px rgba(232, 160, 32, 0.15);
 }
 
+.form-field-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+.field-error {
+    font-size: 0.78rem;
+    color: #ef4444;
+    text-align: left;
+    margin-top: 2px;
+    font-weight: 500;
+}
+
+.input-error {
+    border-color: #ef4444 !important;
+}
+
+.input-error:focus {
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.25) !important;
+}
+
+
 .form-group select option {
     background-color: var(--bg-secondary);
     color: var(--text-primary);

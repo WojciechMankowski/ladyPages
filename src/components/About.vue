@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ShieldCheck } from '@lucide/vue';
-import avatar from '../assets/avatar.png';
+import avatar380Avif from '../assets/avatar-380.avif';
+import avatar760Avif from '../assets/avatar-760.avif';
+import avatar380Jpg from '../assets/avatar-380.jpg';
+import avatar760Jpg from '../assets/avatar-760.jpg';
 </script>
 
 <template>
@@ -8,7 +11,11 @@ import avatar from '../assets/avatar.png';
     <div class="container about-grid">
       <div class="about-visual">
         <div class="avatar-frame">
-          <img :src="avatar" alt="Wojciech Mankowski" class="avatar-img">
+          <picture>
+            <source :srcset="`${avatar380Avif} 1x, ${avatar760Avif} 2x`" type="image/avif">
+            <source :srcset="`${avatar380Jpg} 1x, ${avatar760Jpg} 2x`" type="image/jpeg">
+            <img :src="avatar760Jpg" alt="Wojciech Mankowski" class="avatar-img" width="380" height="380" loading="lazy">
+          </picture>
           <div class="experience-badge">
             <span class="exp-years">5+</span>
             <span class="exp-text">Lat w IT</span>

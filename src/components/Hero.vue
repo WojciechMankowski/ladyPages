@@ -1,35 +1,21 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Award, ArrowRight, Zap, Layout, Loader } from '@lucide/vue';
-import heroVisual from '../assets/hero-visual.png';
+import heroVisual450Avif from '../assets/hero-visual-450.avif';
+import heroVisual900Avif from '../assets/hero-visual-900.avif';
+import heroVisual450Jpg from '../assets/hero-visual-450.jpg';
+import heroVisual900Jpg from '../assets/hero-visual-900.jpg';
+import { useSubscribe } from '../composables/useSubscribe';
 
-const name = ref('');
-const email = ref('');
-const isSubmitting = ref(false);
-const statusMessage = ref('');
-const statusType = ref<'success' | 'error' | ''>('');
-
-const handleSubscribe = () => {
-  if (!name.value || !email.value) {
-    statusMessage.value = 'Proszę wypełnić oba pola.';
-    statusType.value = 'error';
-    return;
-  }
-  
-  isSubmitting.value = true;
-  statusMessage.value = '';
-  statusType.value = '';
-  
-  setTimeout(() => {
-    isSubmitting.value = false;
-    statusMessage.value = 'Gotowe! Sprawdź skrzynkę. Ebook już leci. Jakby nie dotarł w 5 minut, zajrzyj do folderu Oferty/Spam.';
-    statusType.value = 'success';
-    
-    // Reset formularza
-    name.value = '';
-    email.value = '';
-  }, 1500);
-};
+const {
+  name,
+  email,
+  nameError,
+  emailError,
+  isSubmitting,
+  statusMessage,
+  statusType,
+  subscribe: handleSubscribe
+} = useSubscribe();
 </script>
 
 <template>
@@ -53,8 +39,14 @@ const handleSubscribe = () => {
         <div class="hero-form-container fade-in">
           <form @submit.prevent="handleSubscribe" class="hero-inline-form">
             <div class="form-input-group">
-              <input type="text" v-model="name" placeholder="Twoje imię" required :disabled="isSubmitting" aria-label="Imię">
-              <input type="email" v-model="email" placeholder="Twój e-mail służbowy" required :disabled="isSubmitting" aria-label="Email służbowy">
+              <div class="form-field-wrapper">
+                <input type="text" v-model="name" placeholder="Twoje imię" required :disabled="isSubmitting" aria-label="Imię" :class="{ 'input-error': nameError }">
+                <span class="field-error" v-if="nameError">{{ nameError }}</span>
+              </div>
+              <div class="form-field-wrapper">
+                <input type="email" v-model="email" placeholder="Twój e-mail służbowy" required :disabled="isSubmitting" aria-label="Email służbowy" :class="{ 'input-error': emailError }">
+                <span class="field-error" v-if="emailError">{{ emailError }}</span>
+              </div>
             </div>
             <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
               <template v-if="isSubmitting">
@@ -78,7 +70,11 @@ const handleSubscribe = () => {
       
       <div class="hero-visual-container fade-in">
         <div class="visual-wrapper">
-          <img :src="heroVisual" alt="Wizualizacja Power Automate w biurze" class="hero-image">
+          <picture>
+            <source :srcset="`${heroVisual450Avif} 1x, ${heroVisual900Avif} 2x`" type="image/avif">
+            <source :srcset="`${heroVisual450Jpg} 1x, ${heroVisual900Jpg} 2x`" type="image/jpeg">
+            <img :src="heroVisual900Jpg" alt="Wizualizacja Power Automate w biurze" class="hero-image" width="450" height="450" fetchpriority="high">
+          </picture>
           <div class="glow-card card-top">
             <div class="glow-card-icon zap">
               <Zap style="width: 20px; height: 20px;" />
