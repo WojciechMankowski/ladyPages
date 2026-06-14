@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ShieldCheck } from '@lucide/vue';
 import avatar380Avif from '../assets/avatar-380.avif';
 import avatar760Avif from '../assets/avatar-760.avif';
 import avatar380Jpg from '../assets/avatar-380.jpg';
@@ -17,7 +16,7 @@ import avatar760Jpg from '../assets/avatar-760.jpg';
             <img :src="avatar760Jpg" alt="Wojciech Mankowski" class="avatar-img" width="380" height="380" loading="lazy">
           </picture>
           <div class="experience-badge">
-            <span class="exp-years">5+</span>
+            <span class="exp-years">2</span>
             <span class="exp-text">Lat w IT</span>
           </div>
         </div>
@@ -34,20 +33,8 @@ import avatar760Jpg from '../assets/avatar-760.jpg';
         </p>
 
 
-        <div class="certifications-list">
-          <div class="cert-item">
-            <ShieldCheck class="cert-icon" />
-            <span>Certyfikowany Microsoft Power Platform Solution Architect</span>
-          </div>
-        </div>
       </div>
     </div>
   </section>
 </template>
 
-<style scoped>
-
-.certifications-list {
-  margin-top: 20px;
-}
-</style>
