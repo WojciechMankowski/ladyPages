@@ -11,6 +11,57 @@ export function useSubscribe() {
   const statusMessage = ref('');
   const statusType = ref<'success' | 'error' | ''>('');
 
+  // MailerLite embedded form (account / form IDs from the MailerLite embed)
+  const ML_ACCOUNT_ID = '2264313';
+  const ML_FORM_ID = '190235065838471016';
+
+  // MailerLite's subscribe endpoint is JSONP-only (CORS blocks a normal fetch),
+  // so we submit by injecting a <script> with a callback param.
+  const submitToMailerLite = (payload: { email: string; name: string }) => {
+    return new Promise<void>((resolve, reject) => {
+      const callbackName = `ml_jsonp_${Date.now()}`;
+      const params = new URLSearchParams({
+        'fields[email]': payload.email,
+        'fields[name]': payload.name,
+        'ml-submit': '1',
+        anticsrf: 'true',
+        callback: callbackName
+      });
+
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => {
+        cleanup();
+        reject(new Error('timeout'));
+      }, 15000);
+
+      const cleanup = () => {
+        clearTimeout(timeout);
+        delete (window as Record<string, any>)[callbackName];
+        script.remove();
+      };
+
+      (window as Record<string, any>)[callbackName] = (response: any) => {
+        cleanup();
+        // MailerLite returns { success: true, ... } on a accepted subscription.
+        if (response && response.success === false) {
+          reject(new Error(response.message || 'mailerlite_rejected'));
+        } else {
+          resolve();
+        }
+      };
+
+      script.onerror = () => {
+        cleanup();
+        reject(new Error('network'));
+      };
+
+      script.src =
+        `https://assets.mailerlite.com/jsonp/${ML_ACCOUNT_ID}/forms/${ML_FORM_ID}/subscribe?` +
+        params.toString();
+      document.body.appendChild(script);
+    });
+  };
+
   const validateEmail = (val: string) => {
     if (!val) {
       return 'Adres e-mail jest wymagany.';
@@ -66,9 +117,9 @@ export function useSubscribe() {
     statusType.value = '';
 
     try {
-      // Simulate API call to register subscriber (1.5s delay)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      
+      // Register the subscriber in MailerLite
+      await submitToMailerLite({ email: email.value.trim(), name: name.value.trim() });
+
       statusMessage.value = 'Gotowe! Sprawdź skrzynkę. Ebook już leci. Jakby nie dotarł w 5 minut, zajrzyj do folderu Oferty/Spam.';
       statusType.value = 'success';
       
