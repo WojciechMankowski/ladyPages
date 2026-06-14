@@ -80,7 +80,7 @@ onUnmounted(() => {
         <span class="logo-text">Wojciech Mankowski</span>
       </a>
       
-      <nav :class="['main-nav', { active: isMenuOpen }]" id="mainNav">
+      <nav :class="['main-nav', { active: isMenuOpen }]" id="mainNav" aria-label="Główna nawigacja">
         <ul>
           <li><a href="#problem" class="nav-link" @click="closeMenu">Znasz to?</a></li>
           <li><a href="#ebook" class="nav-link" @click="closeMenu">Co w ebooku?</a></li>
@@ -98,7 +98,7 @@ onUnmounted(() => {
         </button>
 
         <a href="#contact" class="btn btn-secondary btn-nav">Odbierz Ebook</a>
-        <button class="mobile-nav-toggle" id="navToggle" @click="toggleMenu" :aria-label="isMenuOpen ? 'Zamknij menu' : 'Otwórz menu'">
+        <button class="mobile-nav-toggle" id="navToggle" @click="toggleMenu" :aria-label="isMenuOpen ? 'Zamknij menu' : 'Otwórz menu'" :aria-expanded="isMenuOpen" aria-controls="mainNav">
           <X v-if="isMenuOpen" />
           <Menu v-else />
         </button>

@@ -71,13 +71,15 @@ onMounted(() => {
 
 <template>
   <div>
+    <a href="#main-content" class="skip-link">Przejdź do treści</a>
+
     <!-- Ambient Glow Effects -->
     <div class="ambient-glow glow-1"></div>
     <div class="ambient-glow glow-2"></div>
     <div class="ambient-glow glow-3"></div>
 
     <Header />
-    <main>
+    <main id="main-content">
       <Hero />
       <Stats />
       <Specializations />

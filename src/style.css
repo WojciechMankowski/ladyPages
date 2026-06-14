@@ -11,9 +11,10 @@
     
     --text-primary: #f8f6f2; /* Cream text */
     --text-secondary: #a8b8d0; /* Muted light text */
-    --text-muted: #788ca5;
-    
+    --text-muted: #98a8c0;
+
     --primary: #E8A020; /* Miodowy / Amber */
+    --primary-text: #E8A020; /* Amber jako tekst (nadpisywany w trybie jasnym dla kontrastu) */
     --primary-glow: rgba(232, 160, 32, 0.35);
     --primary-rgb: 232, 160, 32;
     --secondary: #c88a18; /* Miodowy dark */
@@ -216,7 +217,7 @@ ul {
     background: rgba(232, 160, 32, 0.1);
     border: 1px solid rgba(232, 160, 32, 0.2);
     border-radius: 50px;
-    color: var(--primary);
+    color: var(--primary-text);
     font-family: var(--font-heading);
     font-size: 0.85rem;
     font-weight: 600;
@@ -274,7 +275,7 @@ ul {
 }
 
 .logo-accent {
-    color: var(--primary);
+    color: var(--primary-text);
     font-weight: 500;
 }
 
@@ -470,7 +471,8 @@ ul {
     color: var(--power-apps);
 }
 
-.glow-card-text h4 {
+.glow-card-text .glow-card-title {
+    display: block;
     font-size: 0.9rem;
     font-weight: 600;
 }
@@ -559,7 +561,7 @@ section {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: var(--primary);
+    color: var(--primary-text);
     margin-bottom: 15px;
     display: inline-block;
 }
@@ -731,7 +733,7 @@ section {
     font-size: 1.8rem;
     font-family: var(--font-heading);
     font-weight: 800;
-    color: var(--primary);
+    color: var(--primary-text);
     line-height: 1;
 }
 
@@ -1028,7 +1030,7 @@ section {
 }
 
 .method-details a:hover {
-    color: var(--primary);
+    color: var(--primary-text);
 }
 
 /* Form Styling */
@@ -1414,7 +1416,8 @@ html.light {
     
     --text-primary: #0d1117; /* Tekst główny */
     --text-secondary: #4a4a5a; /* Tekst drugorzędny */
-    --text-muted: #7c7c8c;
+    --text-muted: #646470;
+    --primary-text: #8f6000; /* Ciemny amber dla czytelnego tekstu na jasnym tle */
     
     --border-glass: rgba(13, 17, 23, 0.08);
     --border-glass-hover: rgba(13, 17, 23, 0.16);
@@ -1538,5 +1541,53 @@ html.light .spec-card:hover {
 .theme-toggle svg {
     width: 20px;
     height: 20px;
+}
+
+/* ==========================================================================
+   Dostępność (a11y)
+   ========================================================================== */
+
+/* Link pomijający nawigację (widoczny dopiero po sfokusowaniu klawiaturą) */
+.skip-link {
+    position: absolute;
+    left: 16px;
+    top: -100px;
+    z-index: 2000;
+    padding: 12px 20px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-glass-hover);
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+    top: 16px;
+}
+
+/* Spójny, widoczny wskaźnik fokusu dla nawigacji klawiaturą */
+:focus-visible {
+    outline: 2px solid var(--primary-text);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Szanuj preferencję ograniczenia ruchu (WCAG 2.3.3) */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .reveal,
+    .fade-in {
+        opacity: 1 !important;
+        transform: none !important;
+    }
 }
 

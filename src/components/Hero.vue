@@ -40,12 +40,12 @@ const {
           <form @submit.prevent="handleSubscribe" class="hero-inline-form">
             <div class="form-input-group">
               <div class="form-field-wrapper">
-                <input type="text" v-model="name" placeholder="Twoje imię" required :disabled="isSubmitting" aria-label="Imię" :class="{ 'input-error': nameError }">
-                <span class="field-error" v-if="nameError">{{ nameError }}</span>
+                <input type="text" id="hero-name" v-model="name" placeholder="Twoje imię" required :disabled="isSubmitting" aria-label="Imię" autocomplete="name" :aria-invalid="!!nameError" aria-describedby="hero-name-error" :class="{ 'input-error': nameError }">
+                <span class="field-error" id="hero-name-error" role="alert" v-if="nameError">{{ nameError }}</span>
               </div>
               <div class="form-field-wrapper">
-                <input type="email" v-model="email" placeholder="Twój e-mail służbowy" required :disabled="isSubmitting" aria-label="Email służbowy" :class="{ 'input-error': emailError }">
-                <span class="field-error" v-if="emailError">{{ emailError }}</span>
+                <input type="email" id="hero-email" v-model="email" placeholder="Twój e-mail służbowy" required :disabled="isSubmitting" aria-label="Email służbowy" autocomplete="email" :aria-invalid="!!emailError" aria-describedby="hero-email-error" :class="{ 'input-error': emailError }">
+                <span class="field-error" id="hero-email-error" role="alert" v-if="emailError">{{ emailError }}</span>
               </div>
             </div>
             <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
@@ -62,7 +62,7 @@ const {
           <p class="form-microcopy">
             Zero spamu. Zero żargonu. Co dwa tygodnie jeden konkretny przepływ. Wypiszesz się jednym kliknięciem.
           </p>
-          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;">
+          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">
             {{ statusMessage }}
           </div>
         </div>
@@ -80,7 +80,7 @@ const {
               <Zap style="width: 20px; height: 20px;" />
             </div>
             <div class="glow-card-text">
-              <h4>Power Automate</h4>
+              <span class="glow-card-title">Power Automate</span>
               <p>Automatyzacja procesów</p>
             </div>
           </div>
@@ -89,7 +89,7 @@ const {
               <Layout style="width: 20px; height: 20px;" />
             </div>
             <div class="glow-card-text">
-              <h4>Zyskaj czas</h4>
+              <span class="glow-card-title">Zyskaj czas</span>
               <p>5h zaoszczędzone tygodniowo</p>
             </div>
           </div>

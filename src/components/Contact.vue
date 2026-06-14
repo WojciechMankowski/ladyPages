@@ -66,13 +66,13 @@ const faqItems = [
         <form class="contact-form" @submit.prevent="handleSubscribeFinal">
           <div class="form-group">
             <label for="final-name">Imię</label>
-            <input type="text" id="final-name" v-model="name" required placeholder="np. Krystyna" :disabled="isSubmitting" :class="{ 'input-error': nameError }">
-            <span class="field-error" v-if="nameError">{{ nameError }}</span>
+            <input type="text" id="final-name" v-model="name" required placeholder="np. Krystyna" :disabled="isSubmitting" autocomplete="name" :aria-invalid="!!nameError" aria-describedby="final-name-error" :class="{ 'input-error': nameError }">
+            <span class="field-error" id="final-name-error" role="alert" v-if="nameError">{{ nameError }}</span>
           </div>
           <div class="form-group">
             <label for="final-email">Adres e-mail służbowy</label>
-            <input type="email" id="final-email" v-model="email" required placeholder="np. krystyna@firma.pl" :disabled="isSubmitting" :class="{ 'input-error': emailError }">
-            <span class="field-error" v-if="emailError">{{ emailError }}</span>
+            <input type="email" id="final-email" v-model="email" required placeholder="np. krystyna@firma.pl" :disabled="isSubmitting" autocomplete="email" :aria-invalid="!!emailError" aria-describedby="final-email-error" :class="{ 'input-error': emailError }">
+            <span class="field-error" id="final-email-error" role="alert" v-if="emailError">{{ emailError }}</span>
           </div>
           
           <button type="submit" class="btn btn-primary btn-block" id="btn-submit" :disabled="isSubmitting" style="margin-top: 10px;">
@@ -89,7 +89,7 @@ const faqItems = [
             Klikając przycisk zgadzasz się na zapis do darmowego newslettera. Wypiszesz się jednym kliknięciem. Zero spamu.
           </p>
           
-          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;">
+          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">
             {{ statusMessage }}
           </div>
         </form>

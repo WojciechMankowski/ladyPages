@@ -63,9 +63,9 @@ onMounted(() => {
   <section ref="statsSection" class="stats-bar">
     <div class="container stats-grid">
       <div v-for="(stat, idx) in stats" :key="idx" class="stat-item">
-        <h3 class="stat-number">
+        <div class="stat-number">
           {{ stat.current }}{{ stat.current === stat.target ? stat.suffix : '' }}
-        </h3>
+        </div>
         <p class="stat-label">{{ stat.label }}</p>
       </div>
     </div>
