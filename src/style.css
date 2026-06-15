@@ -625,7 +625,9 @@ section {
 .spec-card:nth-child(3):hover::before { background: var(--power-bi); }
 .spec-card:nth-child(4):hover::before { background: var(--power-pages); }
 .spec-card:nth-child(5):hover::before { background: var(--copilot); }
-.spec-card:nth-child(6):hover::before { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+.spec-card:nth-child(6):hover::before { background: var(--power-apps); }
+.spec-card:nth-child(7):hover::before { background: var(--power-automate); }
+.spec-card:nth-child(8):hover::before { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
 
 .spec-icon-wrapper {
     width: 56px;
