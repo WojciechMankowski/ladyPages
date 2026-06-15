@@ -134,7 +134,13 @@ const {
 .hero-inline-form input:focus {
   border-color: var(--primary);
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 10px rgba(232, 160, 32, 0.15);
+}
+
+/* Widoczny pierścień fokusu dla nawigacji klawiaturą */
+.hero-inline-form input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .form-microcopy {

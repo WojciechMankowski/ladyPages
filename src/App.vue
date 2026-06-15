@@ -9,6 +9,7 @@ import Projects from './components/Projects.vue';
 import Process from './components/Process.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
+import MobileCta from './components/MobileCta.vue';
 
 onMounted(() => {
   // Dynamiczne dodawanie klas reveal do elementów
@@ -89,5 +90,6 @@ onMounted(() => {
       <Contact />
     </main>
     <Footer />
+    <MobileCta />
   </div>
 </template>

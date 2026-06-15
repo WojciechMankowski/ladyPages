@@ -21,7 +21,15 @@
     --secondary-glow: rgba(200, 138, 24, 0.35);
     --secondary-rgb: 200, 138, 24;
     --teal: #06b6d4; /* Teal */
-    
+
+    /* Semantyczne kolory stanów (success / danger) */
+    --success: #10b981;
+    --success-bg: rgba(16, 185, 129, 0.1);
+    --success-border: rgba(16, 185, 129, 0.2);
+    --danger: #ef4444;
+    --danger-bg: rgba(239, 68, 68, 0.1);
+    --danger-border: rgba(239, 68, 68, 0.2);
+
     --btn-primary-text: #0d2257; /* Contrast text color for action buttons */
     
     /* Power Platform Branding Colors */
@@ -40,6 +48,14 @@
     --container-max-width: 1200px;
     --section-padding: 100px 0;
     --section-padding-mobile: 60px 0;
+
+    /* Skala odstępów (rytm 4/8px) */
+    --space-xs: 8px;
+    --space-sm: 16px;
+    --space-md: 24px;
+    --space-lg: 32px;
+    --space-xl: 40px;
+    --space-2xl: 64px;
     
     /* Borders & Shadow */
     --border-glass: rgba(255, 255, 255, 0.08);
@@ -48,7 +64,7 @@
     --border-radius-md: 16px;
     --border-radius-lg: 24px;
     --shadow-main: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.15);
+    --shadow-glow: 0 0 20px var(--primary-glow);
     
     /* Fonts */
     --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -530,7 +546,7 @@ ul {
     font-weight: 800;
     color: var(--text-primary);
     margin-bottom: 5px;
-    background: linear-gradient(135deg, var(--text-primary) 0%, #c084fc 100%);
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -595,7 +611,7 @@ section {
     background: var(--bg-glass);
     border: 1px solid var(--border-glass);
     border-radius: var(--border-radius-md);
-    padding: 35px;
+    padding: var(--space-lg);
     backdrop-filter: blur(12px);
     transition: all var(--transition-normal);
     position: relative;
@@ -783,7 +799,7 @@ section {
     background: var(--bg-glass-heavy);
     border: 1px solid var(--border-glass);
     border-radius: var(--border-radius-md);
-    padding: 35px;
+    padding: var(--space-lg);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -874,7 +890,7 @@ section {
     background: var(--bg-glass);
     border: 1px solid var(--border-glass);
     border-radius: var(--border-radius-md);
-    padding: 35px;
+    padding: var(--space-lg);
     position: relative;
     overflow: hidden;
 }
@@ -1009,7 +1025,7 @@ section {
     background: var(--bg-glass-heavy);
     border: 1px solid var(--border-glass-hover);
     border-radius: var(--border-radius-lg);
-    padding: 45px;
+    padding: var(--space-xl);
     backdrop-filter: blur(15px);
     box-shadow: var(--shadow-main);
 }
@@ -1056,6 +1072,14 @@ section {
     box-shadow: 0 0 10px rgba(232, 160, 32, 0.15);
 }
 
+/* Widoczny pierścień fokusu dla nawigacji klawiaturą (nadpisuje outline:none powyżej) */
+.form-group input:focus-visible,
+.form-group select:focus-visible,
+.form-group textarea:focus-visible {
+    outline: 2px solid var(--primary-text);
+    outline-offset: 2px;
+}
+
 .form-field-wrapper {
     display: flex;
     flex-direction: column;
@@ -1065,18 +1089,18 @@ section {
 
 .field-error {
     font-size: 0.78rem;
-    color: #ef4444;
+    color: var(--danger);
     text-align: left;
     margin-top: 2px;
     font-weight: 500;
 }
 
 .input-error {
-    border-color: #ef4444 !important;
+    border-color: var(--danger) !important;
 }
 
 .input-error:focus {
-    box-shadow: 0 0 10px rgba(239, 68, 68, 0.25) !important;
+    box-shadow: 0 0 10px var(--danger-border) !important;
 }
 
 
@@ -1389,6 +1413,7 @@ html.light {
     --text-secondary: #4a4a5a; /* Tekst drugorzędny */
     --text-muted: #646470;
     --primary-text: #8f6000; /* Ciemny amber dla czytelnego tekstu na jasnym tle */
+    --teal: #0e7490; /* Ciemniejszy teal dla kontrastu na jasnym tle (≥4.5:1) */
     
     --border-glass: rgba(13, 17, 23, 0.08);
     --border-glass-hover: rgba(13, 17, 23, 0.16);
@@ -1403,7 +1428,12 @@ html.light .ambient-glow {
 html.light .badge {
     background: rgba(232, 160, 32, 0.06);
     border-color: rgba(232, 160, 32, 0.15);
-    color: #c88a18;
+    color: var(--primary-text);
+}
+
+/* Kategoria projektu używa --secondary (zbyt jasny amber na jasnym tle) → ciemny amber */
+html.light .project-category {
+    color: var(--primary-text);
 }
 
 html.light .glow-card {
@@ -1538,6 +1568,44 @@ html.light .spec-card:hover {
     outline: 2px solid var(--primary-text);
     outline-offset: 2px;
     border-radius: 2px;
+}
+
+/* ==========================================================================
+   STICKY CTA (tylko mobile) — pojawia się po przewinięciu za Hero
+   ========================================================================== */
+.mobile-cta-bar {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-cta-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-xs);
+        position: fixed;
+        left: 16px;
+        right: 16px;
+        bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+        z-index: 1500;
+        padding: 14px 20px;
+        min-height: 48px;
+        border-radius: var(--border-radius-sm);
+        font-family: var(--font-heading);
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: var(--btn-primary-text);
+        background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+        box-shadow: 0 6px 24px rgba(232, 160, 32, 0.4);
+        transform: translateY(160%);
+        opacity: 0;
+        transition: transform var(--transition-normal), opacity var(--transition-normal);
+    }
+
+    .mobile-cta-bar.visible {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 /* Szanuj preferencję ograniczenia ruchu (WCAG 2.3.3) */

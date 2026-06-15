@@ -126,7 +126,7 @@ import { AlertTriangle, Smile, ShieldAlert, Cpu, HeartHandshake, Key } from '@lu
   background: var(--bg-glass-heavy);
   border: 1px solid var(--border-glass);
   border-radius: var(--border-radius-lg);
-  padding: 40px;
+  padding: var(--space-xl);
   backdrop-filter: blur(15px);
   display: flex;
   flex-direction: column;
@@ -146,13 +146,13 @@ import { AlertTriangle, Smile, ShieldAlert, Cpu, HeartHandshake, Key } from '@lu
 }
 
 .icon-red {
-  color: #ef4444;
+  color: var(--danger);
   width: 28px;
   height: 28px;
 }
 
 .icon-green {
-  color: #10b981;
+  color: var(--success);
   width: 28px;
   height: 28px;
 }
@@ -175,7 +175,7 @@ import { AlertTriangle, Smile, ShieldAlert, Cpu, HeartHandshake, Key } from '@lu
   content: '✕';
   position: absolute;
   left: 0;
-  color: #ef4444;
+  color: var(--danger);
   font-weight: bold;
 }
 
@@ -187,7 +187,7 @@ import { AlertTriangle, Smile, ShieldAlert, Cpu, HeartHandshake, Key } from '@lu
 .problem-thought {
   font-size: 0.95rem;
   color: var(--text-muted);
-  border-left: 3px solid #ef4444;
+  border-left: 3px solid var(--danger);
   padding-left: 15px;
   margin-top: auto;
 }
@@ -207,14 +207,14 @@ import { AlertTriangle, Smile, ShieldAlert, Cpu, HeartHandshake, Key } from '@lu
 .promise-footer {
   margin-top: auto;
   padding: 20px;
-  background: rgba(16, 185, 129, 0.05);
-  border: 1px dashed rgba(16, 185, 129, 0.2);
+  background: var(--success-bg);
+  border: 1px dashed var(--success-border);
   border-radius: var(--border-radius-sm);
   color: var(--text-primary);
 }
 
 .promise-footer strong {
-  color: #10b981;
+  color: var(--success);
 }
 
 /* Fears Section styles */
@@ -233,21 +233,21 @@ import { AlertTriangle, Smile, ShieldAlert, Cpu, HeartHandshake, Key } from '@lu
   background: var(--bg-glass);
   border: 1px solid var(--border-glass);
   border-radius: var(--border-radius-md);
-  padding: 35px;
+  padding: var(--space-lg);
   transition: all var(--transition-normal);
 }
 
 .fear-card:hover {
   transform: translateY(-5px);
-  border-color: rgba(139, 92, 246, 0.2);
-  box-shadow: 0 10px 25px rgba(139, 92, 246, 0.05);
+  border-color: rgba(232, 160, 32, 0.2);
+  box-shadow: 0 10px 25px rgba(232, 160, 32, 0.06);
 }
 
 .fear-icon-box {
   width: 50px;
   height: 50px;
   border-radius: var(--border-radius-sm);
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(232, 160, 32, 0.1);
   color: var(--primary);
   display: flex;
   align-items: center;

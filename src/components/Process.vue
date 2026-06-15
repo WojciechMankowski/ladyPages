@@ -49,7 +49,7 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
       <div class="container">
         <div class="newsletter-banner">
           <div class="banner-content">
-            <span class="section-tag text-purple">Co dostajesz po zapisie</span>
+            <span class="section-tag">Co dostajesz po zapisie</span>
             <h2 class="banner-title">Newsletter „Power Automate dla biura”</h2>
             <p class="banner-desc">
               Pobranie ebooka to dopiero początek. Zostając na liście, otrzymujesz regularne wsparcie w odzyskiwaniu czasu.
@@ -104,16 +104,16 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
   background: var(--bg-glass-heavy);
   border: 1px solid var(--border-glass);
   border-radius: var(--border-radius-lg);
-  padding: 40px;
+  padding: var(--space-xl);
   backdrop-filter: blur(15px);
 }
 
 .target-yes {
-  border-left: 4px solid #10b981;
+  border-left: 4px solid var(--success);
 }
 
 .target-no {
-  border-left: 4px solid #ef4444;
+  border-left: 4px solid var(--danger);
 }
 
 .audience-header {
@@ -126,11 +126,11 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
 }
 
 .text-green {
-  color: #10b981;
+  color: var(--success);
 }
 
 .text-red {
-  color: #ef4444;
+  color: var(--danger);
 }
 
 .icon-bullet {
@@ -168,7 +168,7 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
 }
 
 .newsletter-banner {
-  background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.08), transparent), var(--bg-glass-heavy);
+  background: radial-gradient(circle at top right, rgba(232, 160, 32, 0.08), transparent), var(--bg-glass-heavy);
   border: 1px solid var(--border-glass-hover);
   border-radius: var(--border-radius-lg);
   padding: 50px;
@@ -203,7 +203,7 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
   height: 36px;
   color: var(--primary);
   flex-shrink: 0;
-  background: rgba(139, 92, 246, 0.1);
+  background: rgba(232, 160, 32, 0.1);
   padding: 8px;
   border-radius: var(--border-radius-sm);
 }

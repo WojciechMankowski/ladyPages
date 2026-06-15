@@ -42,11 +42,13 @@ export function useSubscribe() {
 
       (window as Record<string, any>)[callbackName] = (response: any) => {
         cleanup();
-        // MailerLite returns { success: true, ... } on a accepted subscription.
-        if (response && response.success === false) {
-          reject(new Error(response.message || 'mailerlite_rejected'));
-        } else {
+        // MailerLite returns { success: true, ... } only on an accepted subscription.
+        // Require an explicit success flag so an unexpected response shape (e.g. a
+        // captcha/validation error) can't be mistaken for a successful signup.
+        if (response && response.success === true) {
           resolve();
+        } else {
+          reject(new Error((response && response.message) || 'mailerlite_rejected'));
         }
       };
 

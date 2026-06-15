@@ -57,7 +57,7 @@ const faqItems = [
       
       <!-- Final Signup Form (Right Column) - ID contact is placed here for scroll target -->
       <div class="contact-form-container" id="contact">
-        <span class="section-tag text-purple" style="margin-bottom: 10px;">Zacznij dzisiaj</span>
+        <span class="section-tag" style="margin-bottom: 10px;">Zacznij dzisiaj</span>
         <h3 class="final-cta-title">Pierwszy przepływ możesz mieć gotowy jeszcze dziś.</h3>
         <p class="final-cta-desc" style="margin-bottom: 25px;">
           Zostaw swoje imię i adres e-mail. Ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji” wyląduje w Twojej skrzynce za kilka minut.
