@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Award, ArrowRight, Zap, Layout, Loader } from '@lucide/vue';
+import { ArrowRight, Zap, Layout, Loader } from '@lucide/vue';
 import heroVisual450Avif from '../assets/hero-visual-450.avif';
 import heroVisual900Avif from '../assets/hero-visual-900.avif';
 import heroVisual450Jpg from '../assets/hero-visual-450.jpg';
@@ -22,21 +22,20 @@ const {
   <section class="hero" id="hero">
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="badge fade-in">
-          <Award class="badge-icon" />
-          <span>Darmowy Ebook + Newsletter „Power Automate dla biura”</span>
-        </div>
+      
         <h1 class="hero-title fade-in">
-          Odzyskaj 5 godzin <br>
-          tygodniowo w biurze. <br>
-          <span class="text-gradient">Bez działu IT.</span>
+          Przestań ręcznie przeklejać dane <br>
+          między <span class="text-gradient">Excelem a Outlookiem</span>.
         </h1>
         <p class="hero-subtitle fade-in">
-          Power Automate to narzędzie, które <strong>już masz</strong> w pakiecie Microsoft 365, tylko nikt Ci nie pokazał, jak je włączyć. Zapisz się, a dostaniesz darmowy ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji”: 5 gotowych przepływów, które wdrożysz w jeden dzień, bez ani jednej linijki kodu.
+          Przewodnik po Power Automate dla pracowników biura, którzy nie mają wykształcenia informatycznego i nie chcą go mieć. Premiera wiosną 2027.
         </p>
         
         <!-- Formularz Zapisu w Sekcji Hero -->
         <div class="hero-form-container fade-in">
+          <p class="form-lead-text">
+            Zostaw adres, a od razu wyślę Ci instrukcję „Jak zmienić wiadomość z Teams w zadanie w Planerze”. Przy premierze dostaniesz kod na 30% rabatu.
+          </p>
           <form @submit.prevent="handleSubscribe" class="hero-inline-form">
             <div class="form-input-group">
               <div class="form-field-wrapper">
@@ -54,7 +53,7 @@ const {
                 <Loader class="animate-spin" style="width: 18px; height: 18px;" />
               </template>
               <template v-else>
-                <span>Chcę odzyskać czas</span>
+                <span>Chcę instrukcję i rabat</span>
                 <ArrowRight style="width: 18px; height: 18px;" />
               </template>
             </button>
@@ -104,6 +103,13 @@ const {
   width: 100%;
   max-width: 580px;
   margin-top: 10px;
+}
+
+.form-lead-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 14px;
 }
 
 .hero-inline-form {

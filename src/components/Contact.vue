@@ -81,7 +81,7 @@ const faqItems = [
               <Loader class="animate-spin" />
             </template>
             <template v-else>
-              <span>Chcę odzyskać czas →</span>
+              <span>Chcę instrukcję i rabat →</span>
             </template>
           </button>
           

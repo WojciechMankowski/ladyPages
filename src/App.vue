@@ -2,7 +2,6 @@
 import { onMounted } from 'vue';
 import Header from './components/Header.vue';
 import Hero from './components/Hero.vue';
-import Stats from './components/Stats.vue';
 import Specializations from './components/Specializations.vue';
 import About from './components/About.vue';
 import Projects from './components/Projects.vue';
@@ -82,7 +81,6 @@ onMounted(() => {
     <Header />
     <main id="main-content">
       <Hero />
-      <Stats />
       <Specializations />
       <About />
       <Projects />
