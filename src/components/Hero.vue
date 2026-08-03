@@ -59,7 +59,7 @@ const {
             </button>
           </form>
           <p class="form-microcopy">
-            Zero spamu. Zero żargonu. Co dwa tygodnie jeden konkretny przepływ. Wypiszesz się jednym kliknięciem.
+            Zero spamu. Zero żargonu. Bez zapisu na newsletter, tylko instrukcja i kod rabatowy.
           </p>
           <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">
             {{ statusMessage }}

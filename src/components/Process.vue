@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
+import { Check, X, MailOpen, Gift } from '@lucide/vue';
 </script>
 
 <template>
@@ -44,44 +44,30 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
       </div>
     </section>
 
-    <!-- Section: Co dwa tygodnie w skrzynce -->
-    <section class="newsletter-details" id="newsletter-details">
+    <!-- Section: Co dostajesz po zapisie -->
+    <section class="signup-reward" id="signup-reward">
       <div class="container">
-        <div class="newsletter-banner">
+        <div class="signup-reward-banner">
           <div class="banner-content">
-            <span class="section-tag">Co dostajesz po zapisie</span>
-            <h2 class="banner-title">Newsletter „Power Automate dla biura”</h2>
+           
+            <h2 class="banner-title">Co dostaniesz po zapisie</h2>
             <p class="banner-desc">
-              Pobranie ebooka to dopiero początek. Zostając na liście, otrzymujesz regularne wsparcie w odzyskiwaniu czasu.
+              Zostawiasz imię i adres e-mail, a w zamian dostajesz dokładnie dwie rzeczy. Bez regularnych maili i bez subskrypcji.
             </p>
-            
+
             <div class="features-grid-mini">
-              <div class="mini-feature">
-                <Calendar class="feat-icon" />
-                <div>
-                  <h4>Co dwa tygodnie w skrzynce</h4>
-                  <p>Tylko jeden, konkretny i w pełni opisany przepływ do wdrożenia. Nic więcej.</p>
-                </div>
-              </div>
               <div class="mini-feature">
                 <MailOpen class="feat-icon" />
                 <div>
-                  <h4>Pisany po ludzku</h4>
-                  <p>Tłumaczę technologię na język biurowy. Bez skomplikowanego żargonu i teorii.</p>
+                  <h4>Instrukcja od razu na maila</h4>
+                  <p>Krok po kroku: jak zmienić wiadomość z Teams w zadanie w Planerze. Wdrożysz w 15 minut.</p>
                 </div>
               </div>
               <div class="mini-feature">
                 <Gift class="feat-icon" />
                 <div>
-                  <h4>W 100% darmowy</h4>
-                  <p>Żadnych ukrytych kosztów. Możesz się wypisać jednym kliknięciem w dowolnym momencie.</p>
-                </div>
-              </div>
-              <div class="mini-feature">
-                <HelpCircle class="feat-icon" />
-                <div>
-                  <h4>Zero zbędnej teorii</h4>
-                  <p>Żadnego gadania o „transformacji cyfrowej”. Sam czysty konkret, który włączasz w 15 minut.</p>
+                  <h4>Kod na 30% rabatu</h4>
+                  <p>Dostaniesz go, gdy ebook „Power Automate od zera” pojawi się wiosną 2027.</p>
                 </div>
               </div>
             </div>
@@ -161,13 +147,13 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
   font-size: 1.2rem;
 }
 
-/* Newsletter banner styling */
-.newsletter-details {
+/* Sekcja "co dostajesz po zapisie" */
+.signup-reward {
   padding: var(--section-padding);
   background-color: var(--bg-secondary);
 }
 
-.newsletter-banner {
+.signup-reward-banner {
   background: radial-gradient(circle at top right, rgba(232, 160, 32, 0.08), transparent), var(--bg-glass-heavy);
   border: 1px solid var(--border-glass-hover);
   border-radius: var(--border-radius-lg);
@@ -230,7 +216,7 @@ import { Check, X, MailOpen, Calendar, HelpCircle, Gift } from '@lucide/vue';
     grid-template-columns: 1fr;
   }
   
-  .newsletter-banner {
+  .signup-reward-banner {
     padding: 30px;
   }
 }

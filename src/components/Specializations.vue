@@ -18,7 +18,7 @@ import {
       <div class="section-header">
         <span class="section-tag">Zawartość Ebooka</span>
         <h2 class="section-title">Ebook „Power Automate: od zera do automatyzacji”</h2>
-        <p class="section-desc">Sześć rozdziałów, które prowadzą Cię od pierwszego kliknięcia do gotowych automatyzacji — plus bonusy do użycia od ręki. Krok po kroku, w przystępnym języku.</p>
+        <p class="section-desc">Sześć rozdziałów, które prowadzą Cię od pierwszego kliknięcia do gotowych automatyzacji, plus bonusy do użycia od ręki. Krok po kroku, w przystępnym języku.</p>
       </div>
 
       <div class="spec-grid">
@@ -31,7 +31,7 @@ import {
           <h3 class="spec-card-title">Zaczynasz bez wstępu o programowaniu</h3>
           <p class="spec-card-desc">Poznasz, dla kogo jest ten ebook, czym jest Power Automate i co to są przepływy. Bez programistycznego wstępu.</p>
           <ul class="spec-features">
-            <li><Check class="check-icon" /> Dla kogo jest ten ebook — i dla kogo nie</li>
+            <li><Check class="check-icon" /> Dla kogo jest ten ebook, a dla kogo nie</li>
             <li><Check class="check-icon" /> Definicja Power Automate i przepływu w jednym zdaniu</li>
             <li><Check class="check-icon" /> Mapa rozdziałów: gdzie szukać czego</li>
           </ul>
@@ -59,9 +59,9 @@ import {
           </div>
           <span class="spec-card-eyebrow">Rozdział 2</span>
           <h3 class="spec-card-title">Przestaniesz się gubić w słowniku Microsoftu</h3>
-          <p class="spec-card-desc">Słowniczek kluczowych pojęć, które przewijają się przez cały ebook — żeby nic Cię później nie zaskoczyło.</p>
+          <p class="spec-card-desc">Słowniczek kluczowych pojęć, które przewijają się przez cały ebook, żeby nic Cię później nie zaskoczyło.</p>
           <ul class="spec-features">
-            <li><Check class="check-icon" /> Zdarzenie i wyzwalacz — po ludzku, na przykładach</li>
+            <li><Check class="check-icon" /> Zdarzenie i wyzwalacz: po ludzku, na przykładach</li>
             <li><Check class="check-icon" /> Chmura i środowisko w praktyce Power Automate</li>
             <li><Check class="check-icon" /> Power Apps i pojęcie użytkownika</li>
           </ul>
@@ -104,7 +104,7 @@ import {
           </div>
           <span class="spec-card-eyebrow">Rozdział 5</span>
           <h3 class="spec-card-title">Skopiujesz cztery gotowe automatyzacje do swojej pracy</h3>
-          <p class="spec-card-desc">Cztery konkretne, biznesowe scenariusze rozpisane krok po kroku — z opisem problemu i konfiguracją akcji.</p>
+          <p class="spec-card-desc">Cztery konkretne, biznesowe scenariusze rozpisane krok po kroku, z opisem problemu i konfiguracją akcji.</p>
           <ul class="spec-features">
             <li><Check class="check-icon" /> Formularz klienta → dokument Word mailem</li>
             <li><Check class="check-icon" /> Faktury z maili prosto na OneDrive</li>

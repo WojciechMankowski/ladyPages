@@ -24,7 +24,7 @@ const faqItems = [
   },
   {
     q: 'Ile to kosztuje?',
-    a: 'Ebook oraz newsletter „Power Automate dla biura” są całkowicie bezpłatne (0 zł). Otrzymujesz dostęp w zamian za Twój adres e-mail.'
+    a: 'Instrukcja „Jak zmienić wiadomość z Teams w zadanie w Planerze” i kod na 30% rabatu na ebooka są całkowicie bezpłatne (0 zł). Otrzymujesz je w zamian za Twój adres e-mail, bez zapisu na newsletter.'
   },
   {
     q: 'Nie mam czasu na naukę kolejnego narzędzia...',
@@ -63,8 +63,8 @@ const faqItems = [
           Zostaw swoje imię i adres e-mail. Resztę dostajesz w dwóch krokach.
         </p>
         <ul class="final-cta-list">
-          <li><Check class="check-icon" /> Instrukcję „Jak zmienić wiadomość z Teams w zadanie w Planerze” — od razu na maila</li>
-          <li><Check class="check-icon" /> Kod na 30% rabatu na ebook — gdy ten pojawi się wiosną 2027</li>
+          <li><Check class="check-icon" /> Instrukcję „Jak zmienić wiadomość z Teams w zadanie w Planerze” od razu na maila</li>
+          <li><Check class="check-icon" /> Kod na 30% rabatu na ebook, gdy ten pojawi się wiosną 2027</li>
         </ul>
 
         <form class="contact-form" @submit.prevent="handleSubscribeFinal">
@@ -90,7 +90,7 @@ const faqItems = [
           </button>
           
           <p class="form-microcopy-center" style="margin-top: 15px; font-size: 0.75rem; text-align: center; color: var(--text-muted);">
-            Klikając przycisk zgadzasz się na zapis do darmowego newslettera. Wypiszesz się jednym kliknięciem. Zero spamu.
+            Klikając przycisk zgadzasz się na przesłanie instrukcji i kodu rabatowego na podany adres e-mail. Zero spamu, brak subskrypcji.
           </p>
           
           <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">
