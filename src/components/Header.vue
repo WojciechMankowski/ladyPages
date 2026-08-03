@@ -82,9 +82,7 @@ onUnmounted(() => {
       
       <nav :class="['main-nav', { active: isMenuOpen }]" id="mainNav" aria-label="Główna nawigacja">
         <ul>
-          <li><a href="#problem" class="nav-link" @click="closeMenu">Znasz to?</a></li>
           <li><a href="#ebook" class="nav-link" @click="closeMenu">Co w ebooku?</a></li>
-          <li><a href="#fears" class="nav-link" @click="closeMenu">Bez obaw</a></li>
           <li><a href="#about" class="nav-link" @click="closeMenu">O mnie</a></li>
           <li><a href="#faq" class="nav-link" @click="closeMenu">FAQ</a></li>
         </ul>

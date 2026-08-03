@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Loader, HelpCircle } from '@lucide/vue';
+import { Loader, HelpCircle, Check } from '@lucide/vue';
 import { useSubscribe } from '../composables/useSubscribe';
 
 const {
@@ -59,10 +59,14 @@ const faqItems = [
       <div class="contact-form-container" id="contact">
         <span class="section-tag" style="margin-bottom: 10px;">Zacznij dzisiaj</span>
         <h3 class="final-cta-title">Pierwszy przepływ możesz mieć gotowy jeszcze dziś.</h3>
-        <p class="final-cta-desc" style="margin-bottom: 25px;">
-          Zostaw swoje imię i adres e-mail. Ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji” wyląduje w Twojej skrzynce za kilka minut.
+        <p class="final-cta-desc">
+          Zostaw swoje imię i adres e-mail. Resztę dostajesz w dwóch krokach.
         </p>
-        
+        <ul class="final-cta-list">
+          <li><Check class="check-icon" /> Instrukcję „Jak zmienić wiadomość z Teams w zadanie w Planerze” — od razu na maila</li>
+          <li><Check class="check-icon" /> Kod na 30% rabatu na ebook — gdy ten pojawi się wiosną 2027</li>
+        </ul>
+
         <form class="contact-form" @submit.prevent="handleSubscribeFinal">
           <div class="form-group">
             <label for="final-name">Imię</label>
@@ -149,6 +153,24 @@ const faqItems = [
 
 .final-cta-desc {
   font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.final-cta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+  list-style: none;
+}
+
+.final-cta-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.5;
 }

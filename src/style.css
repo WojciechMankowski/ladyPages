@@ -614,6 +614,16 @@ section {
 .copilot-icon { background: var(--copilot-bg); color: var(--copilot); }
 .ecosystem-icon { background: rgba(232, 160, 32, 0.1); color: var(--primary-text); }
 
+.spec-card-eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
 .spec-card-title {
     font-size: 1.3rem;
     margin-bottom: 15px;

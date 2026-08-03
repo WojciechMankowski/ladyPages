@@ -4,7 +4,6 @@ import Header from './components/Header.vue';
 import Hero from './components/Hero.vue';
 import Specializations from './components/Specializations.vue';
 import About from './components/About.vue';
-import Projects from './components/Projects.vue';
 import Process from './components/Process.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
@@ -17,8 +16,6 @@ onMounted(() => {
     '.spec-card',
     '.about-visual',
     '.about-content',
-    '.glass-card',
-    '.fear-card',
     '.audience-box',
     '.mini-feature',
     '.testimonial-box',
@@ -83,7 +80,6 @@ onMounted(() => {
       <Hero />
       <Specializations />
       <About />
-      <Projects />
       <Process />
       <Contact />
     </main>

@@ -27,12 +27,13 @@ import {
           <div class="spec-icon-wrapper app-icon">
             <BookOpen />
           </div>
-          <h3 class="spec-card-title">Wstęp — od czego zacząć</h3>
+          <span class="spec-card-eyebrow">Wstęp</span>
+          <h3 class="spec-card-title">Zaczynasz bez wstępu o programowaniu</h3>
           <p class="spec-card-desc">Poznasz, dla kogo jest ten ebook, czym jest Power Automate i co to są przepływy. Bez programistycznego wstępu.</p>
           <ul class="spec-features">
-            <li><Check class="check-icon" /> Dla osób bez doświadczenia w kodowaniu</li>
-            <li><Check class="check-icon" /> Podpowiedź, jak korzystać z materiału</li>
-            <li><Check class="check-icon" /> Nie musisz czytać po kolei</li>
+            <li><Check class="check-icon" /> Dla kogo jest ten ebook — i dla kogo nie</li>
+            <li><Check class="check-icon" /> Definicja Power Automate i przepływu w jednym zdaniu</li>
+            <li><Check class="check-icon" /> Mapa rozdziałów: gdzie szukać czego</li>
           </ul>
         </div>
 
@@ -41,12 +42,13 @@ import {
           <div class="spec-icon-wrapper flow-icon">
             <Workflow />
           </div>
-          <h3 class="spec-card-title">Rozdział 1 — Rodzaje przepływów</h3>
+          <span class="spec-card-eyebrow">Rozdział 1</span>
+          <h3 class="spec-card-title">Rozpoznasz, który typ przepływu pasuje do Twojego zadania</h3>
           <p class="spec-card-desc">Cztery podstawowe typy przepływów i jasna wskazówka, kiedy stosować który z nich w codziennej pracy.</p>
           <ul class="spec-features">
-            <li><Check class="check-icon" /> Zautomatyzowany i błyskawiczny</li>
-            <li><Check class="check-icon" /> Zaplanowany według harmonogramu</li>
-            <li><Check class="check-icon" /> Wzmianka o Power Automate Desktop</li>
+            <li><Check class="check-icon" /> Przepływ zautomatyzowany i błyskawiczny</li>
+            <li><Check class="check-icon" /> Przepływ zaplanowany według harmonogramu</li>
+            <li><Check class="check-icon" /> Kiedy sięgnąć po Power Automate Desktop do automatyzacji pulpitu</li>
           </ul>
         </div>
 
@@ -55,12 +57,13 @@ import {
           <div class="spec-icon-wrapper bi-icon">
             <BookA />
           </div>
-          <h3 class="spec-card-title">Rozdział 2 — Najważniejsze słownictwo</h3>
+          <span class="spec-card-eyebrow">Rozdział 2</span>
+          <h3 class="spec-card-title">Przestaniesz się gubić w słowniku Microsoftu</h3>
           <p class="spec-card-desc">Słowniczek kluczowych pojęć, które przewijają się przez cały ebook — żeby nic Cię później nie zaskoczyło.</p>
           <ul class="spec-features">
-            <li><Check class="check-icon" /> Zdarzenie, wyzwalacz, chmura</li>
-            <li><Check class="check-icon" /> Power Apps i użytkownik</li>
-            <li><Check class="check-icon" /> Pojęcia wytłumaczone po ludzku</li>
+            <li><Check class="check-icon" /> Zdarzenie i wyzwalacz — po ludzku, na przykładach</li>
+            <li><Check class="check-icon" /> Chmura i środowisko w praktyce Power Automate</li>
+            <li><Check class="check-icon" /> Power Apps i pojęcie użytkownika</li>
           </ul>
         </div>
 
@@ -69,7 +72,8 @@ import {
           <div class="spec-icon-wrapper pages-icon">
             <Compass />
           </div>
-          <h3 class="spec-card-title">Rozdział 3 — Poruszanie się po Power Automate</h3>
+          <span class="spec-card-eyebrow">Rozdział 3</span>
+          <h3 class="spec-card-title">Odnajdziesz się w interfejsie, zanim cokolwiek zbudujesz</h3>
           <p class="spec-card-desc">Przewodnik po interfejsie aplikacji, żebyś sprawnie odnajdował się w narzędziu, zanim zaczniesz budować.</p>
           <ul class="spec-features">
             <li><Check class="check-icon" /> Ekran główny i „Moje przepływy”</li>
@@ -83,7 +87,8 @@ import {
           <div class="spec-icon-wrapper copilot-icon">
             <Wand2 />
           </div>
-          <h3 class="spec-card-title">Rozdział 4 — Tworzenie pierwszego przepływu</h3>
+          <span class="spec-card-eyebrow">Rozdział 4</span>
+          <h3 class="spec-card-title">Zbudujesz pierwszy przepływ ze zrzutami z każdego kliknięcia</h3>
           <p class="spec-card-desc">Trzy ścieżki budowy przepływu, z tutorialami krok po kroku i zrzutami ekranu z każdego kliknięcia.</p>
           <ul class="spec-features">
             <li><Check class="check-icon" /> Z gotowego szablonu</li>
@@ -97,7 +102,8 @@ import {
           <div class="spec-icon-wrapper app-icon">
             <Briefcase />
           </div>
-          <h3 class="spec-card-title">Rozdział 5 — Gotowe rozwiązania w praktyce</h3>
+          <span class="spec-card-eyebrow">Rozdział 5</span>
+          <h3 class="spec-card-title">Skopiujesz cztery gotowe automatyzacje do swojej pracy</h3>
           <p class="spec-card-desc">Cztery konkretne, biznesowe scenariusze rozpisane krok po kroku — z opisem problemu i konfiguracją akcji.</p>
           <ul class="spec-features">
             <li><Check class="check-icon" /> Formularz klienta → dokument Word mailem</li>
@@ -111,12 +117,13 @@ import {
           <div class="spec-icon-wrapper flow-icon">
             <Rocket />
           </div>
-          <h3 class="spec-card-title">Rozdział 6 — Wskazówki do dalszego rozwoju</h3>
+          <span class="spec-card-eyebrow">Rozdział 6</span>
+          <h3 class="spec-card-title">Będziesz wiedział, co robić po podstawach</h3>
           <p class="spec-card-desc">Co robić po opanowaniu podstaw, żeby rozwijać się dalej i myśleć automatyzacją na co dzień.</p>
           <ul class="spec-features">
             <li><Check class="check-icon" /> Wyrażenia i obsługa błędów</li>
             <li><Check class="check-icon" /> Szerszy ekosystem Power Platform</li>
-            <li><Check class="check-icon" /> Ścieżka certyfikacji PL-900</li>
+            <li><Check class="check-icon" /> Jak podejść do egzaminu Microsoft PL-900, jeśli chcesz papier</li>
           </ul>
         </div>
 
@@ -125,7 +132,8 @@ import {
           <div class="spec-icon-wrapper ecosystem-icon">
             <Gift />
           </div>
-          <h3 class="spec-card-title">Bonusy — checklisty, szablony, linki</h3>
+          <span class="spec-card-eyebrow">Bonus</span>
+          <h3 class="spec-card-title">Sięgniesz po gotowce zamiast zaczynać od zera</h3>
           <p class="spec-card-desc">Praktyczny dodatek z gotowymi materiałami, po które sięgniesz przy każdej nowej automatyzacji.</p>
           <ul class="spec-features">
             <li><Check class="check-icon" /> Checklisty do wdrażania i diagnozy</li>
