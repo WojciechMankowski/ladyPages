@@ -1,34 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Loader, HelpCircle } from '@lucide/vue';
+import { Loader, HelpCircle, Check } from '@lucide/vue';
+import { useSubscribe } from '../composables/useSubscribe';
 
-const name = ref('');
-const email = ref('');
-const isSubmitting = ref(false);
-const statusMessage = ref('');
-const statusType = ref<'success' | 'error' | ''>('');
-
-const handleSubscribeFinal = () => {
-  if (!name.value || !email.value) {
-    statusMessage.value = 'Proszę wypełnić oba pola.';
-    statusType.value = 'error';
-    return;
-  }
-  
-  isSubmitting.value = true;
-  statusMessage.value = '';
-  statusType.value = '';
-  
-  setTimeout(() => {
-    isSubmitting.value = false;
-    statusMessage.value = 'Gotowe! Sprawdź skrzynkę. Ebook już leci. Jakby nie dotarł w 5 minut, zajrzyj do folderu Oferty/Spam.';
-    statusType.value = 'success';
-    
-    // Reset formularza
-    name.value = '';
-    email.value = '';
-  }, 1500);
-};
+const {
+  name,
+  email,
+  nameError,
+  emailError,
+  isSubmitting,
+  statusMessage,
+  statusType,
+  subscribe: handleSubscribeFinal
+} = useSubscribe();
 
 const faqItems = [
   {
@@ -41,7 +24,7 @@ const faqItems = [
   },
   {
     q: 'Ile to kosztuje?',
-    a: 'Ebook oraz newsletter „Power Automate dla biura” są całkowicie bezpłatne (0 zł). Otrzymujesz dostęp w zamian za Twój adres e-mail.'
+    a: 'Instrukcja „Jak zmienić wiadomość z Teams w zadanie w Planerze” i kod na 30% rabatu na ebooka są całkowicie bezpłatne (0 zł). Otrzymujesz je w zamian za Twój adres e-mail, bez zapisu na newsletter.'
   },
   {
     q: 'Nie mam czasu na naukę kolejnego narzędzia...',
@@ -74,20 +57,26 @@ const faqItems = [
       
       <!-- Final Signup Form (Right Column) - ID contact is placed here for scroll target -->
       <div class="contact-form-container" id="contact">
-        <span class="section-tag text-purple" style="margin-bottom: 10px;">Zacznij dzisiaj</span>
+        <span class="section-tag" style="margin-bottom: 10px;">Zacznij dzisiaj</span>
         <h3 class="final-cta-title">Pierwszy przepływ możesz mieć gotowy jeszcze dziś.</h3>
-        <p class="final-cta-desc" style="margin-bottom: 25px;">
-          Zostaw swoje imię i adres e-mail. Ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji” wyląduje w Twojej skrzynce za kilka minut.
+        <p class="final-cta-desc">
+          Zostaw swoje imię i adres e-mail. Resztę dostajesz w dwóch krokach.
         </p>
-        
+        <ul class="final-cta-list">
+          <li><Check class="check-icon" /> Instrukcję „Jak zmienić wiadomość z Teams w zadanie w Planerze” od razu na maila</li>
+          <li><Check class="check-icon" /> Kod na 30% rabatu na ebook, gdy ten pojawi się wiosną 2027</li>
+        </ul>
+
         <form class="contact-form" @submit.prevent="handleSubscribeFinal">
           <div class="form-group">
             <label for="final-name">Imię</label>
-            <input type="text" id="final-name" v-model="name" required placeholder="np. Krystyna" :disabled="isSubmitting">
+            <input type="text" id="final-name" v-model="name" required placeholder="np. Krystyna" :disabled="isSubmitting" autocomplete="name" :aria-invalid="!!nameError" aria-describedby="final-name-error" :class="{ 'input-error': nameError }">
+            <span class="field-error" id="final-name-error" role="alert" v-if="nameError">{{ nameError }}</span>
           </div>
           <div class="form-group">
             <label for="final-email">Adres e-mail służbowy</label>
-            <input type="email" id="final-email" v-model="email" required placeholder="np. krystyna@firma.pl" :disabled="isSubmitting">
+            <input type="email" id="final-email" v-model="email" required placeholder="np. krystyna@firma.pl" :disabled="isSubmitting" autocomplete="email" :aria-invalid="!!emailError" aria-describedby="final-email-error" :class="{ 'input-error': emailError }">
+            <span class="field-error" id="final-email-error" role="alert" v-if="emailError">{{ emailError }}</span>
           </div>
           
           <button type="submit" class="btn btn-primary btn-block" id="btn-submit" :disabled="isSubmitting" style="margin-top: 10px;">
@@ -96,15 +85,15 @@ const faqItems = [
               <Loader class="animate-spin" />
             </template>
             <template v-else>
-              <span>Chcę odzyskać czas →</span>
+              <span>Chcę instrukcję i rabat →</span>
             </template>
           </button>
           
           <p class="form-microcopy-center" style="margin-top: 15px; font-size: 0.75rem; text-align: center; color: var(--text-muted);">
-            Klikając przycisk zgadzasz się na zapis do darmowego newslettera. Wypiszesz się jednym kliknięciem. Zero spamu.
+            Klikając przycisk zgadzasz się na przesłanie instrukcji i kodu rabatowego na podany adres e-mail. Zero spamu, brak subskrypcji.
           </p>
           
-          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;">
+          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">
             {{ statusMessage }}
           </div>
         </form>
@@ -164,6 +153,24 @@ const faqItems = [
 
 .final-cta-desc {
   font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.final-cta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+  list-style: none;
+}
+
+.final-cta-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.5;
 }

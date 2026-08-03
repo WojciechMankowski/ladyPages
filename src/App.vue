@@ -2,13 +2,12 @@
 import { onMounted } from 'vue';
 import Header from './components/Header.vue';
 import Hero from './components/Hero.vue';
-import Stats from './components/Stats.vue';
 import Specializations from './components/Specializations.vue';
 import About from './components/About.vue';
-import Projects from './components/Projects.vue';
 import Process from './components/Process.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
+import MobileCta from './components/MobileCta.vue';
 
 onMounted(() => {
   // Dynamiczne dodawanie klas reveal do elementów
@@ -17,8 +16,6 @@ onMounted(() => {
     '.spec-card',
     '.about-visual',
     '.about-content',
-    '.glass-card',
-    '.fear-card',
     '.audience-box',
     '.mini-feature',
     '.testimonial-box',
@@ -71,21 +68,22 @@ onMounted(() => {
 
 <template>
   <div>
+    <a href="#main-content" class="skip-link">Przejdź do treści</a>
+
     <!-- Ambient Glow Effects -->
     <div class="ambient-glow glow-1"></div>
     <div class="ambient-glow glow-2"></div>
     <div class="ambient-glow glow-3"></div>
 
     <Header />
-    <main>
+    <main id="main-content">
       <Hero />
-      <Stats />
       <Specializations />
       <About />
-      <Projects />
       <Process />
       <Contact />
     </main>
     <Footer />
+    <MobileCta />
   </div>
 </template>

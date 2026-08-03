@@ -1,60 +1,51 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Award, ArrowRight, Zap, Layout, Loader } from '@lucide/vue';
-import heroVisual from '../assets/hero-visual.png';
+import { ArrowRight, Zap, Layout, Loader } from '@lucide/vue';
+import heroVisual450Avif from '../assets/hero-visual-450.avif';
+import heroVisual900Avif from '../assets/hero-visual-900.avif';
+import heroVisual450Jpg from '../assets/hero-visual-450.jpg';
+import heroVisual900Jpg from '../assets/hero-visual-900.jpg';
+import { useSubscribe } from '../composables/useSubscribe';
 
-const name = ref('');
-const email = ref('');
-const isSubmitting = ref(false);
-const statusMessage = ref('');
-const statusType = ref<'success' | 'error' | ''>('');
-
-const handleSubscribe = () => {
-  if (!name.value || !email.value) {
-    statusMessage.value = 'Proszę wypełnić oba pola.';
-    statusType.value = 'error';
-    return;
-  }
-  
-  isSubmitting.value = true;
-  statusMessage.value = '';
-  statusType.value = '';
-  
-  setTimeout(() => {
-    isSubmitting.value = false;
-    statusMessage.value = 'Gotowe! Sprawdź skrzynkę. Ebook już leci. Jakby nie dotarł w 5 minut, zajrzyj do folderu Oferty/Spam.';
-    statusType.value = 'success';
-    
-    // Reset formularza
-    name.value = '';
-    email.value = '';
-  }, 1500);
-};
+const {
+  name,
+  email,
+  nameError,
+  emailError,
+  isSubmitting,
+  statusMessage,
+  statusType,
+  subscribe: handleSubscribe
+} = useSubscribe();
 </script>
 
 <template>
   <section class="hero" id="hero">
     <div class="container hero-grid">
       <div class="hero-content">
-        <div class="badge fade-in">
-          <Award class="badge-icon" />
-          <span>Darmowy Ebook + Newsletter „Power Automate dla biura”</span>
-        </div>
+      
         <h1 class="hero-title fade-in">
-          Odzyskaj 5 godzin <br>
-          tygodniowo w biurze. <br>
-          <span class="text-gradient">Bez działu IT.</span>
+          Przestań ręcznie przeklejać dane <br>
+          między <span class="text-gradient">Excelem a Outlookiem</span>.
         </h1>
         <p class="hero-subtitle fade-in">
-          Power Automate to narzędzie, które <strong>już masz</strong> w pakiecie Microsoft 365, tylko nikt Ci nie pokazał, jak je włączyć. Zapisz się, a dostaniesz darmowy ebook „Power Automate od zera: Twój pierwszy krok w świat automatyzacji”: 5 gotowych przepływów, które wdrożysz w jeden dzień, bez ani jednej linijki kodu.
+          Przewodnik po Power Automate dla pracowników biura, którzy nie mają wykształcenia informatycznego i nie chcą go mieć. Premiera wiosną 2027.
         </p>
         
         <!-- Formularz Zapisu w Sekcji Hero -->
         <div class="hero-form-container fade-in">
+          <p class="form-lead-text">
+            Zostaw adres, a od razu wyślę Ci instrukcję „Jak zmienić wiadomość z Teams w zadanie w Planerze”. Przy premierze dostaniesz kod na 30% rabatu.
+          </p>
           <form @submit.prevent="handleSubscribe" class="hero-inline-form">
             <div class="form-input-group">
-              <input type="text" v-model="name" placeholder="Twoje imię" required :disabled="isSubmitting" aria-label="Imię">
-              <input type="email" v-model="email" placeholder="Twój e-mail służbowy" required :disabled="isSubmitting" aria-label="Email służbowy">
+              <div class="form-field-wrapper">
+                <input type="text" id="hero-name" v-model="name" placeholder="Twoje imię" required :disabled="isSubmitting" aria-label="Imię" autocomplete="name" :aria-invalid="!!nameError" aria-describedby="hero-name-error" :class="{ 'input-error': nameError }">
+                <span class="field-error" id="hero-name-error" role="alert" v-if="nameError">{{ nameError }}</span>
+              </div>
+              <div class="form-field-wrapper">
+                <input type="email" id="hero-email" v-model="email" placeholder="Twój e-mail służbowy" required :disabled="isSubmitting" aria-label="Email służbowy" autocomplete="email" :aria-invalid="!!emailError" aria-describedby="hero-email-error" :class="{ 'input-error': emailError }">
+                <span class="field-error" id="hero-email-error" role="alert" v-if="emailError">{{ emailError }}</span>
+              </div>
             </div>
             <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
               <template v-if="isSubmitting">
@@ -62,15 +53,15 @@ const handleSubscribe = () => {
                 <Loader class="animate-spin" style="width: 18px; height: 18px;" />
               </template>
               <template v-else>
-                <span>Chcę odzyskać czas</span>
+                <span>Chcę instrukcję i rabat</span>
                 <ArrowRight style="width: 18px; height: 18px;" />
               </template>
             </button>
           </form>
           <p class="form-microcopy">
-            Zero spamu. Zero żargonu. Co dwa tygodnie jeden konkretny przepływ. Wypiszesz się jednym kliknięciem.
+            Zero spamu. Zero żargonu. Bez zapisu na newsletter, tylko instrukcja i kod rabatowy.
           </p>
-          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;">
+          <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">
             {{ statusMessage }}
           </div>
         </div>
@@ -78,13 +69,17 @@ const handleSubscribe = () => {
       
       <div class="hero-visual-container fade-in">
         <div class="visual-wrapper">
-          <img :src="heroVisual" alt="Wizualizacja Power Automate w biurze" class="hero-image">
+          <picture>
+            <source :srcset="`${heroVisual450Avif} 1x, ${heroVisual900Avif} 2x`" type="image/avif">
+            <source :srcset="`${heroVisual450Jpg} 1x, ${heroVisual900Jpg} 2x`" type="image/jpeg">
+            <img :src="heroVisual900Jpg" alt="Wizualizacja Power Automate w biurze" class="hero-image" width="450" height="450" fetchpriority="high">
+          </picture>
           <div class="glow-card card-top">
             <div class="glow-card-icon zap">
               <Zap style="width: 20px; height: 20px;" />
             </div>
             <div class="glow-card-text">
-              <h4>Power Automate</h4>
+              <span class="glow-card-title">Power Automate</span>
               <p>Automatyzacja procesów</p>
             </div>
           </div>
@@ -93,7 +88,7 @@ const handleSubscribe = () => {
               <Layout style="width: 20px; height: 20px;" />
             </div>
             <div class="glow-card-text">
-              <h4>Zyskaj czas</h4>
+              <span class="glow-card-title">Zyskaj czas</span>
               <p>5h zaoszczędzone tygodniowo</p>
             </div>
           </div>
@@ -108,6 +103,13 @@ const handleSubscribe = () => {
   width: 100%;
   max-width: 580px;
   margin-top: 10px;
+}
+
+.form-lead-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 14px;
 }
 
 .hero-inline-form {
@@ -138,7 +140,13 @@ const handleSubscribe = () => {
 .hero-inline-form input:focus {
   border-color: var(--primary);
   background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.15);
+  box-shadow: 0 0 10px rgba(232, 160, 32, 0.15);
+}
+
+/* Widoczny pierścień fokusu dla nawigacji klawiaturą */
+.hero-inline-form input:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 .form-microcopy {
