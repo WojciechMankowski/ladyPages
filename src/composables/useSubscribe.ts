@@ -122,7 +122,7 @@ export function useSubscribe() {
       // Register the subscriber in MailerLite
       await submitToMailerLite({ email: email.value.trim(), name: name.value.trim() });
 
-      statusMessage.value = 'Gotowe! Sprawdź skrzynkę. Ebook już leci. Jakby nie dotarł w 5 minut, zajrzyj do folderu Oferty/Spam.';
+      statusMessage.value = 'Gotowe! Sprawdź skrzynkę. Instrukcja już leci. Jakby nie dotarła w 5 minut, zajrzyj do folderu Oferty/Spam.';
       statusType.value = 'success';
       
       // Clear inputs and error states on success

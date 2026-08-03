@@ -67,7 +67,7 @@ import { Check, X, MailOpen, Gift } from '@lucide/vue';
                 <Gift class="feat-icon" />
                 <div>
                   <h4>Kod na 30% rabatu</h4>
-                  <p>Dostaniesz go, gdy ebook „Power Automate od zera” pojawi się wiosną 2027.</p>
+                  <p>Dostaniesz go, gdy ebook „Power Automate od zera. Twój pierwszy krok w świat automatyzacji” pojawi się wiosną 2027.</p>
                 </div>
               </div>
             </div>
