@@ -1075,6 +1075,28 @@ section {
     color: var(--text-primary);
 }
 
+.form-checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.form-checkbox-group input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    accent-color: var(--primary);
+    cursor: pointer;
+}
+
+.form-checkbox-group label {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+
 .form-status {
     font-size: 0.9rem;
     font-weight: 500;
