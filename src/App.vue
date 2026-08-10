@@ -8,6 +8,7 @@ import Process from './components/Process.vue';
 import Contact from './components/Contact.vue';
 import Footer from './components/Footer.vue';
 import MobileCta from './components/MobileCta.vue';
+import CookieConsent from './components/CookieConsent.vue';
 
 onMounted(() => {
   // Dynamiczne dodawanie klas reveal do elementów
@@ -85,5 +86,6 @@ onMounted(() => {
     </main>
     <Footer />
     <MobileCta />
+    <CookieConsent />
   </div>
 </template>

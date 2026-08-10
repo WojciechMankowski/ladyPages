@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Polityka prywatności | Wojciech Mankowski</title>
+<meta name="description" content="Polityka prywatności serwisu mankowskiwojciech.pl: zasady przetwarzania danych osobowych i plików cookies." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    var saved = localStorage.getItem('theme');
+    var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved === 'light' || (!saved && !prefersDark)) {
+      document.documentElement.classList.add('light');
+    }
+  })();
+</script>
+<style>
+  :root {
+    --bg-primary: #0d2257;
+    --bg-secondary: #1a3a5c;
+    --bg-tertiary: #244973;
+    --bg-glass: rgba(26, 58, 92, 0.7);
+    --bg-glass-heavy: rgba(13, 34, 87, 0.85);
+    --text-primary: #f8f6f2;
+    --text-secondary: #a8b8d0;
+    --text-muted: #98a8c0;
+    --primary: #E8A020;
+    --primary-text: #E8A020;
+    --secondary: #c88a18;
+    --btn-primary-text: #0d2257;
+    --border-glass: rgba(255, 255, 255, 0.08);
+    --border-glass-hover: rgba(255, 255, 255, 0.18);
+    --border-radius-sm: 8px;
+    --border-radius-md: 16px;
+    --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html.light {
+    --bg-primary: #f8f6f2;
+    --bg-secondary: #fdf6e3;
+    --bg-tertiary: #f3efe6;
+    --bg-glass: rgba(253, 246, 227, 0.7);
+    --bg-glass-heavy: rgba(248, 246, 242, 0.85);
+    --text-primary: #0d1117;
+    --text-secondary: #4a4a5a;
+    --text-muted: #646470;
+    --primary-text: #8f6000;
+    --border-glass: rgba(13, 17, 23, 0.08);
+    --border-glass-hover: rgba(13, 17, 23, 0.16);
+    --btn-primary-text: #0d2257;
+  }
+
+  * , *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; background-color: var(--bg-primary); }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a { color: inherit; text-decoration: none; transition: var(--transition-fast); }
+
+  h1, h2 { font-family: var(--font-heading); color: var(--text-primary); font-weight: 700; line-height: 1.25; }
+
+  .container { width: 90%; max-width: 900px; margin: 0 auto; padding: 0 15px; }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg-glass-heavy);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border-glass);
+  }
+
+  .site-header .container {
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .logo { font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; color: var(--text-primary); }
+  .logo-accent { color: var(--primary); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-glass);
+    padding: 8px 16px;
+    border-radius: 50px;
+  }
+
+  .back-link:hover { color: var(--text-primary); border-color: var(--border-glass-hover); }
+
+  main { flex: 1; padding: 60px 0 80px; }
+
+  .policy-header { margin-bottom: 40px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(232, 160, 32, 0.1);
+    border: 1px solid rgba(232, 160, 32, 0.2);
+    border-radius: 50px;
+    color: var(--primary-text);
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin-bottom: 12px; }
+
+  .policy-header p { color: var(--text-muted); font-size: 0.95rem; }
+
+  .policy-card {
+    background: var(--bg-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--border-radius-md);
+    padding: clamp(24px, 5vw, 48px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .policy-card section + section { margin-top: 34px; padding-top: 34px; border-top: 1px solid var(--border-glass); }
+
+  .policy-card h2 { font-size: 1.15rem; margin-bottom: 14px; }
+
+  .policy-card p { margin-bottom: 12px; }
+  .policy-card p:last-child { margin-bottom: 0; }
+
+  .policy-card ul { list-style: none; margin: 12px 0; display: flex; flex-direction: column; gap: 8px; }
+
+  .policy-card li { position: relative; padding-left: 20px; }
+
+  .policy-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+  }
+
+  .policy-card a { color: var(--primary-text); font-weight: 600; }
+  .policy-card a:hover { text-decoration: underline; }
+
+  .site-footer {
+    border-top: 1px solid var(--border-glass);
+    padding: 30px 0;
+    text-align: center;
+  }
+
+  .site-footer p { font-size: 0.82rem; color: var(--text-muted); }
+  .site-footer a { color: var(--text-secondary); }
+  .site-footer a:hover { color: var(--text-primary); }
+
+  @media (max-width: 600px) {
+    .site-header .container { padding-top: 14px; padding-bottom: 14px; }
+    .back-link span { display: none; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo"><span class="logo-accent">&lt;</span>WM<span class="logo-accent"> /&gt;</span></a>
+      <a href="/" class="back-link">&larr; <span>Powrót do strony głównej</span></a>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="policy-header">
+        <span class="badge">Dokument prawny</span>
+        <h1>Polityka prywatności</h1>
+        <p>Ostatnia aktualizacja: 10 sierpnia 2026</p>
+      </div>
+
+      <div class="policy-card">
+        <p style="margin-bottom: 30px;">Polityka prywatności opisuje zasady przetwarzania przez nas informacji na Twój temat, w tym danych osobowych oraz plików cookies.</p>
+
+        <section>
+          <h2>1. Informacje ogólne</h2>
+          <p>Niniejsza polityka dotyczy Serwisu www, funkcjonującego pod adresem url: <a href="https://mankowskiwojciech.pl/">https://mankowskiwojciech.pl/</a></p>
+          <p>Operatorem Serwisu oraz Administratorem danych osobowych jest Wojciech Mankowski, Majkowskiego 8/7, Gdańsk.</p>
+          <p>Adres kontaktowy poczty elektronicznej Operatora: kontakt@mankowskiwojciech.pl</p>
+          <p>Operator jest Administratorem Twoich danych osobowych w odniesieniu do danych podanych dobrowolnie w Serwisie.</p>
+          <p>Serwis wykorzystuje dane osobowe w następujących celach:</p>
+          <ul>
+            <li>zapisu na listę osób zainteresowanych ebookiem oraz wysyłki związanych z tym wiadomości (w tym materiałów zapowiadających premierę i kodu rabatowego dla osób zapisanych przed premierą),</li>
+            <li>kontaktu zwrotnego, jeśli zostanie zainicjowany przez użytkownika.</li>
+          </ul>
+          <p>Serwis pozyskuje informacje o użytkownikach w następujący sposób:</p>
+          <ul>
+            <li>poprzez dobrowolnie wprowadzone w formularzu zapisu dane (imię, adres e-mail), które trafiają do systemu mailingowego Operatora,</li>
+            <li>poprzez zapisywanie w urządzeniu końcowym plików cookies, na warunkach opisanych w punkcie 8.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>2. Metody ochrony danych stosowane przez Operatora</h2>
+          <p>Transmisja danych wprowadzanych w formularzu jest chroniona certyfikatem SSL, dzięki czemu dane wprowadzone na stronie są szyfrowane i mogą zostać odczytane wyłącznie na docelowym serwerze.</p>
+          <p>Operator regularnie wykonuje kopie bezpieczeństwa oraz aktualizuje oprogramowanie wykorzystywane do przetwarzania danych osobowych.</p>
+        </section>
+
+        <section>
+          <h2>3. Hosting i podmioty przetwarzające dane</h2>
+          <p>Serwis jest hostowany na infrastrukturze Cloudflare, Inc. (San Francisco, USA), która odpowiada za dostarczanie treści strony.</p>
+          <p>Dane podane w formularzu zapisu (imię, adres e-mail) są przekazywane do:</p>
+          <p>UAB "MailerLite", Paupio g. 28, LT-11341 Vilnius, Litwa, w celu prowadzenia zapisów i wysyłki wiadomości e-mail związanych z ebookiem, w tym newslettera i kodu rabatowego.</p>
+        </section>
+
+        <section>
+          <h2>4. Twoje prawa i dodatkowe informacje o sposobie wykorzystania danych</h2>
+          <p>Twoje dane osobowe są przetwarzane przez Administratora nie dłużej, niż jest to konieczne do realizacji celów, dla których zostały zebrane, w tym przez okres wynikający z przepisów prawa (np. o rachunkowości).</p>
+          <p>Przysługuje Ci prawo żądania od Administratora:</p>
+          <ul>
+            <li>dostępu do danych osobowych Ciebie dotyczących,</li>
+            <li>ich sprostowania,</li>
+            <li>usunięcia,</li>
+            <li>ograniczenia przetwarzania,</li>
+            <li>przenoszenia danych.</li>
+          </ul>
+          <p>Przysługuje Ci również prawo wniesienia sprzeciwu wobec przetwarzania Twoich danych osobowych w celach marketingu bezpośredniego, w tym rezygnacji z newslettera w każdej chwili (np. przez link w stopce wiadomości e-mail).</p>
+          <p>Na działania Administratora przysługuje skarga do Prezesa Urzędu Ochrony Danych Osobowych, ul. Stawki 2, 00-193 Warszawa.</p>
+          <p>Podanie danych osobowych jest dobrowolne, lecz niezbędne do zapisania się na listę i otrzymania materiałów dotyczących ebooka.</p>
+          <p>Serwis nie stosuje zautomatyzowanego podejmowania decyzji ani profilowania.</p>
+        </section>
+
+        <section>
+          <h2>5. Informacje w formularzach</h2>
+          <p>Serwis zbiera dane podane dobrowolnie przez użytkownika w formularzu zapisu, w szczególności imię i adres e-mail.</p>
+          <p>Serwis może zapisać informacje o parametrach połączenia towarzyszące wysłaniu formularza (znacznik czasu, adres IP).</p>
+          <p>Dane podane w formularzu są przetwarzane wyłącznie w celu, jakiemu służy formularz, czyli zapisu na listę osób zainteresowanych ebookiem i przesyłania związanych z tym materiałów.</p>
+        </section>
+
+        <section>
+          <h2>6. Logi Administratora</h2>
+          <p>Informacje o korzystaniu z Serwisu mogą podlegać rejestrowaniu w logach serwera, na potrzeby bezpieczeństwa i diagnostyki. Dane te są wykorzystywane wyłącznie do administrowania Serwisem.</p>
+        </section>
+
+        <section>
+          <h2>7. Istotne techniki marketingowe</h2>
+          <p>Serwis korzysta z systemu mailingowego MailerLite do obsługi zapisów i wysyłki newslettera. Zapis następuje wyłącznie po dobrowolnym podaniu przez użytkownika imienia i adresu e-mail w formularzu.</p>
+          <p>Serwis nie korzysta z Google Analytics, pikseli reklamowych ani innych narzędzi śledzących ruch użytkowników.</p>
+        </section>
+
+        <section>
+          <h2>8. Informacja o plikach cookies</h2>
+          <p>Serwis korzysta z plików cookies.</p>
+          <p>Pliki cookies (tzw. "ciasteczka") to dane informatyczne, w szczególności pliki tekstowe, przechowywane w urządzeniu końcowym Użytkownika i przeznaczone do korzystania ze stron internetowych Serwisu.</p>
+          <p>Przy pierwszej wizycie w Serwisie wyświetlany jest baner z prośbą o zgodę na wykorzystanie plików cookies. Decyzja użytkownika (akceptacja lub odrzucenie) jest zapamiętywana w jego przeglądarce.</p>
+          <p>Pliki cookies zapisywane bezpośrednio przez Serwis służą wyłącznie zapamiętaniu tej decyzji.</p>
+          <p>Czcionki wykorzystywane w Serwisie (Google Fonts) są ładowane z serwerów Google Inc., co wiąże się z przesłaniem do Google adresu IP użytkownika w momencie wczytania strony.</p>
+        </section>
+
+        <section>
+          <h2>9. Zarządzanie ustawieniami cookies</h2>
+          <p>Przeglądarka internetowa zazwyczaj domyślnie dopuszcza przechowywanie plików cookies w urządzeniu końcowym Użytkownika. Użytkownik może samodzielnie zmienić ustawienia dotyczące cookies, w tym je zablokować lub usunąć, korzystając z ustawień swojej przeglądarki.</p>
+          <p>Ograniczenie stosowania plików cookies może wpłynąć na niektóre funkcjonalności dostępne w Serwisie.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Wojciech Mankowski. Wszelkie prawa zastrzeżone. &middot; <a href="/">Strona główna</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

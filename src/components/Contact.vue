@@ -5,8 +5,10 @@ import { useSubscribe } from '../composables/useSubscribe';
 const {
   name,
   email,
+  consent,
   nameError,
   emailError,
+  consentError,
   isSubmitting,
   statusMessage,
   statusType,
@@ -78,7 +80,13 @@ const faqItems = [
             <input type="email" id="final-email" v-model="email" required placeholder="np. krystyna@firma.pl" :disabled="isSubmitting" autocomplete="email" :aria-invalid="!!emailError" aria-describedby="final-email-error" :class="{ 'input-error': emailError }">
             <span class="field-error" id="final-email-error" role="alert" v-if="emailError">{{ emailError }}</span>
           </div>
-          
+
+          <div class="form-checkbox-group">
+            <input type="checkbox" id="final-consent" v-model="consent" :disabled="isSubmitting" :aria-invalid="!!consentError" aria-describedby="final-consent-error">
+            <label for="final-consent">Zgadzam się na zapisanie do listy mailingowej i otrzymywanie informacji marketingowych. Z mailingu mogę wypisać się w dowolnym momencie.</label>
+          </div>
+          <span class="field-error" id="final-consent-error" role="alert" v-if="consentError">{{ consentError }}</span>
+
           <button type="submit" class="btn btn-primary btn-block" id="btn-submit" :disabled="isSubmitting" style="margin-top: 10px;">
             <template v-if="isSubmitting">
               <span>Wysyłanie...</span>
@@ -88,9 +96,9 @@ const faqItems = [
               <span>Chcę instrukcję i rabat →</span>
             </template>
           </button>
-          
+
           <p class="form-microcopy-center" style="margin-top: 15px; font-size: 0.75rem; text-align: center; color: var(--text-muted);">
-            Klikając przycisk zgadzasz się na przesłanie instrukcji i kodu rabatowego na podany adres e-mail. Zero spamu, brak subskrypcji.
+            Instrukcję i kod rabatowy wyślemy na podany adres e-mail. Zero spamu, tylko treści dotyczące ebooka.
           </p>
           
           <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">

@@ -3,9 +3,11 @@ import { ref, watch } from 'vue';
 export function useSubscribe() {
   const name = ref('');
   const email = ref('');
-  
+  const consent = ref(false);
+
   const nameError = ref('');
   const emailError = ref('');
+  const consentError = ref('');
   
   const isSubmitting = ref(false);
   const statusMessage = ref('');
@@ -103,12 +105,19 @@ export function useSubscribe() {
     }
   });
 
+  watch(consent, (newVal) => {
+    if (newVal) {
+      consentError.value = '';
+    }
+  });
+
   const subscribe = async () => {
     // Run validation on submit
     nameError.value = validateName(name.value);
     emailError.value = validateEmail(email.value);
+    consentError.value = consent.value ? '' : 'Zaznacz zgodę, aby otrzymać materiały.';
 
-    if (nameError.value || emailError.value) {
+    if (nameError.value || emailError.value || consentError.value) {
       statusMessage.value = 'Proszę poprawić błędy w formularzu.';
       statusType.value = 'error';
       return false;
@@ -128,9 +137,11 @@ export function useSubscribe() {
       // Clear inputs and error states on success
       name.value = '';
       email.value = '';
+      consent.value = false;
       nameError.value = '';
       emailError.value = '';
-      
+      consentError.value = '';
+
       return true;
     } catch (err) {
       statusMessage.value = 'Wystąpił błąd podczas zapisu. Spróbuj ponownie później.';
@@ -144,8 +155,10 @@ export function useSubscribe() {
   return {
     name,
     email,
+    consent,
     nameError,
     emailError,
+    consentError,
     isSubmitting,
     statusMessage,
     statusType,

@@ -15,6 +15,7 @@
           <li><a href="#projects">Projekty</a></li>
           <li><a href="#process">Proces</a></li>
           <li><a href="#contact">Kontakt</a></li>
+          <li><a href="/polityka-prywatnosci.html">Polityka prywatności</a></li>
         </ul>
       </div>
       <div class="footer-bottom">

@@ -9,8 +9,10 @@ import { useSubscribe } from '../composables/useSubscribe';
 const {
   name,
   email,
+  consent,
   nameError,
   emailError,
+  consentError,
   isSubmitting,
   statusMessage,
   statusType,
@@ -47,6 +49,13 @@ const {
                 <span class="field-error" id="hero-email-error" role="alert" v-if="emailError">{{ emailError }}</span>
               </div>
             </div>
+
+            <div class="form-checkbox-group">
+              <input type="checkbox" id="hero-consent" v-model="consent" :disabled="isSubmitting" :aria-invalid="!!consentError" aria-describedby="hero-consent-error">
+              <label for="hero-consent">Zgadzam się na zapisanie do listy mailingowej i otrzymywanie informacji marketingowych. Z mailingu mogę wypisać się w dowolnym momencie.</label>
+            </div>
+            <span class="field-error" id="hero-consent-error" role="alert" v-if="consentError">{{ consentError }}</span>
+
             <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
               <template v-if="isSubmitting">
                 <span>Wysyłanie...</span>
@@ -59,7 +68,7 @@ const {
             </button>
           </form>
           <p class="form-microcopy">
-            Zero spamu. Zero żargonu. Bez zapisu na newsletter, tylko instrukcja i kod rabatowy.
+            Zero spamu. Zero żargonu. Wypisanie jednym kliknięciem w każdej wiadomości.
           </p>
           <div v-if="statusMessage" :class="['form-status', statusType]" style="margin-top: 15px;" role="status" aria-live="polite">
             {{ statusMessage }}
