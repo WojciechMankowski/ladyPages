@@ -11,9 +11,8 @@
       <div class="footer-links">
         <ul>
           <li><a href="#about">O mnie</a></li>
-          <li><a href="#specializations">Specjalizacje</a></li>
-          <li><a href="#projects">Projekty</a></li>
-          <li><a href="#process">Proces</a></li>
+          <li><a href="#ebook">Specjalizacje</a></li>
+          <li><a href="#target-audience">Proces</a></li>
           <li><a href="#contact">Kontakt</a></li>
           <li><a href="/polityka-prywatnosci.html">Polityka prywatności</a></li>
         </ul>

@@ -21,7 +21,7 @@ export function useSubscribe() {
   // so we submit by injecting a <script> with a callback param.
   const submitToMailerLite = (payload: { email: string; name: string }) => {
     return new Promise<void>((resolve, reject) => {
-      const callbackName = `ml_jsonp_${Date.now()}`;
+      const callbackName = `ml_jsonp_${Date.now()}_${Math.random().toString(36).slice(2)}`;
       const params = new URLSearchParams({
         'fields[email]': payload.email,
         'fields[name]': payload.name,

@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -8,5 +9,9 @@ export default defineConfig({
     // @lucide/vue to pojedynczy barrel ~1,5 MB — wymuszamy jednorazową,
     // przewidywalną pre-optymalizację, żeby cache był stabilny i start szybki.
     include: ['@lucide/vue'],
+  },
+  test: {
+    environment: 'jsdom',
+    exclude: ['node_modules/**', 'dist/**', 'e2e/**'],
   },
 })
