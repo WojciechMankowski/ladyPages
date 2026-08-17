@@ -26,7 +26,7 @@ const faqItems = [
   },
   {
     q: 'Ile to kosztuje?',
-    a: 'Instrukcja „Jak zmienić wiadomość z Teams w zadanie w Planerze” i kod na 30% rabatu na ebooka są całkowicie bezpłatne (0 zł). Otrzymujesz je w zamian za Twój adres e-mail, bez zapisu na newsletter.'
+    a: 'Instrukcja „Jak zmienić wiadomość z Teams w zadanie w Planerze” i kod na 30% rabatu na ebooka są całkowicie bezpłatne (0 zł). Otrzymujesz je w zamian za Twój adres e-mail.'
   },
   {
     q: 'Nie mam czasu na naukę kolejnego narzędzia...',
