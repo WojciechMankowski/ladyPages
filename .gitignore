@@ -32,6 +32,7 @@ dist-ssr
 !.dev.vars.example
 .env*
 !.env.example
+!.env.production
 
 # testy
 test-results
