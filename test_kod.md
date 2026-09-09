@@ -4,7 +4,7 @@
 
 **Zaimplementowane i uruchamialne.** Kod poniżej to kopia dokumentacyjna testów, które faktycznie żyją w projekcie jako prawdziwe pliki:
 
-- `src/composables/useSubscribe.spec.ts` — testy jednostkowe (Vitest)
+- `src/composables/useSubscribe.spec.ts`, `src/composables/useAnalytics.spec.ts` — testy jednostkowe (Vitest)
 - `src/components/{Header,Hero,Contact,Footer,MobileCta,CookieConsent}.spec.ts` — testy komponentów (Vitest + `@vue/test-utils`, `jsdom`)
 - `e2e/signup.spec.ts` — testy E2E (Playwright, `playwright.config.ts`)
 
@@ -261,7 +261,7 @@ describe('useSubscribe — subscribe()', () => {
 
 ## 2. Testy komponentów [COMPONENT]
 
-`@vue/test-utils` `mount()`, środowisko `jsdom`. 19 testów pokrywających Header, Hero, Contact, Footer, MobileCta i CookieConsent — wszystkie zielone.
+`@vue/test-utils` `mount()`, środowisko `jsdom`. 23 testy pokrywające Header, Hero, Contact, Footer, MobileCta i CookieConsent — wszystkie zielone.
 
 ```ts
 // src/components/Header.spec.ts
@@ -488,13 +488,26 @@ describe('MobileCta.vue', () => {
 
 ```ts
 // src/components/CookieConsent.spec.ts
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { mount } from '@vue/test-utils';
 import CookieConsent from './CookieConsent.vue';
+
+const grantAnalyticsConsent = vi.fn();
+const denyAnalyticsConsent = vi.fn();
+
+vi.mock('../composables/useAnalytics', () => ({
+  useAnalytics: () => ({
+    grantAnalyticsConsent,
+    denyAnalyticsConsent,
+    analyticsEnabled: () => true,
+  }),
+}));
 
 describe('CookieConsent.vue', () => {
   beforeEach(() => {
     localStorage.clear();
+    grantAnalyticsConsent.mockClear();
+    denyAnalyticsConsent.mockClear();
   });
 
   it('2.16 baner jest widoczny przy pierwszej wizycie (brak zapisanej decyzji)', async () => {
@@ -529,6 +542,122 @@ describe('CookieConsent.vue', () => {
     const wrapper = mount(CookieConsent);
     await wrapper.vm.$nextTick();
     expect(wrapper.find('.cookie-consent').exists()).toBe(false);
+  });
+
+  it('2.20 klik "Akceptuj" włącza zgodę na Google Analytics', async () => {
+    const wrapper = mount(CookieConsent);
+    await wrapper.vm.$nextTick();
+    await wrapper.findAll('button')[1].trigger('click'); // "Akceptuj"
+
+    expect(grantAnalyticsConsent).toHaveBeenCalledTimes(1);
+    expect(denyAnalyticsConsent).not.toHaveBeenCalled();
+  });
+
+  it('2.21 klik "Odrzuć" wyłącza zgodę na Google Analytics', async () => {
+    const wrapper = mount(CookieConsent);
+    await wrapper.vm.$nextTick();
+    await wrapper.findAll('button')[0].trigger('click'); // "Odrzuć"
+
+    expect(denyAnalyticsConsent).toHaveBeenCalledTimes(1);
+    expect(grantAnalyticsConsent).not.toHaveBeenCalled();
+  });
+
+  it('2.22 zapisana zgoda "accepted" włącza Google Analytics już przy zamontowaniu', async () => {
+    localStorage.setItem('cookie-consent', 'accepted');
+    mount(CookieConsent);
+    await Promise.resolve();
+
+    expect(grantAnalyticsConsent).toHaveBeenCalledTimes(1);
+  });
+
+  it('2.23 zapisana decyzja "rejected" nie włącza Google Analytics przy zamontowaniu', async () => {
+    localStorage.setItem('cookie-consent', 'rejected');
+    mount(CookieConsent);
+    await Promise.resolve();
+
+    expect(grantAnalyticsConsent).not.toHaveBeenCalled();
+  });
+});
+```
+
+---
+
+## 2a. Testy jednostkowe — `src/composables/useAnalytics.ts` [UNIT]
+
+Cienki wrapper na `vue-gtag`: `analyticsEnabled()` (czy `VITE_GA_ID` ustawione), `grantAnalyticsConsent()` (wstrzyknięcie `gtag.js` przez `addGtag()` + `consent('update', { analytics_storage: 'granted' })`) oraz `denyAnalyticsConsent()`. `vue-gtag` jest mockowane — nie ładujemy prawdziwego skryptu. 6 przypadków, wszystkie zielone.
+
+```ts
+// src/composables/useAnalytics.spec.ts
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { addGtag, consent } from 'vue-gtag';
+
+vi.mock('vue-gtag', () => ({
+  addGtag: vi.fn(() => Promise.resolve()),
+  consent: vi.fn(),
+}));
+
+const addGtagMock = vi.mocked(addGtag);
+const consentMock = vi.mocked(consent);
+
+async function loadWithGaId(id: string) {
+  vi.resetModules();
+  vi.stubEnv('VITE_GA_ID', id);
+  return import('./useAnalytics');
+}
+
+beforeEach(() => {
+  addGtagMock.mockClear();
+  consentMock.mockClear();
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+});
+
+describe('useAnalytics — analyticsEnabled', () => {
+  it('zwraca false, gdy VITE_GA_ID jest puste', async () => {
+    const { useAnalytics } = await loadWithGaId('');
+    expect(useAnalytics().analyticsEnabled()).toBe(false);
+  });
+
+  it('zwraca true, gdy VITE_GA_ID jest ustawione', async () => {
+    const { useAnalytics } = await loadWithGaId('G-TEST123');
+    expect(useAnalytics().analyticsEnabled()).toBe(true);
+  });
+});
+
+describe('useAnalytics — grantAnalyticsConsent', () => {
+  it('wstrzykuje gtag.js i ustawia analytics_storage=granted, gdy GA jest włączone', async () => {
+    const { useAnalytics } = await loadWithGaId('G-TEST123');
+    await useAnalytics().grantAnalyticsConsent();
+
+    expect(addGtagMock).toHaveBeenCalledTimes(1);
+    expect(consentMock).toHaveBeenCalledWith('update', { analytics_storage: 'granted' });
+  });
+
+  it('nie robi nic, gdy VITE_GA_ID jest puste', async () => {
+    const { useAnalytics } = await loadWithGaId('');
+    await useAnalytics().grantAnalyticsConsent();
+
+    expect(addGtagMock).not.toHaveBeenCalled();
+    expect(consentMock).not.toHaveBeenCalled();
+  });
+});
+
+describe('useAnalytics — denyAnalyticsConsent', () => {
+  it('ustawia analytics_storage=denied, gdy GA jest włączone', async () => {
+    const { useAnalytics } = await loadWithGaId('G-TEST123');
+    useAnalytics().denyAnalyticsConsent();
+
+    expect(consentMock).toHaveBeenCalledWith('update', { analytics_storage: 'denied' });
+    expect(addGtagMock).not.toHaveBeenCalled();
+  });
+
+  it('nie robi nic, gdy VITE_GA_ID jest puste', async () => {
+    const { useAnalytics } = await loadWithGaId('');
+    useAnalytics().denyAnalyticsConsent();
+
+    expect(consentMock).not.toHaveBeenCalled();
   });
 });
 ```

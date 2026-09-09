@@ -36,6 +36,8 @@ Dane podane w formularzu zapisu (imię, adres e-mail) są przekazywane do:
 
 UAB "MailerLite", Paupio g. 28, LT-11341 Vilnius, Litwa, w celu prowadzenia zapisów i wysyłki wiadomości e-mail związanych z ebookiem, w tym newslettera i kodu rabatowego.
 
+W przypadku wyrażenia zgody na cookies analityczne dane o sposobie korzystania z Serwisu (zdarzenia Google Analytics 4) są przekazywane do Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlandia. Google może przekazać te dane do Google LLC w USA na podstawie decyzji Komisji Europejskiej o odpowiednim stopniu ochrony (Data Privacy Framework). Adres IP użytkownika jest przez Google skracany i nie jest łączony z innymi danymi.
+
 ## 4. Twoje prawa i dodatkowe informacje o sposobie wykorzystania danych
 
 Twoje dane osobowe są przetwarzane przez Administratora nie dłużej, niż jest to konieczne do realizacji celów, dla których zostały zebrane, w tym przez okres wynikający z przepisów prawa (np. o rachunkowości).
@@ -72,7 +74,7 @@ Informacje o korzystaniu z Serwisu mogą podlegać rejestrowaniu w logach serwer
 
 Serwis korzysta z systemu mailingowego MailerLite do obsługi zapisów i wysyłki newslettera. Zapis następuje wyłącznie po dobrowolnym podaniu przez użytkownika imienia i adresu e-mail w formularzu.
 
-Serwis nie korzysta z Google Analytics, pikseli reklamowych ani innych narzędzi śledzących ruch użytkowników.
+Serwis korzysta z Google Analytics 4 (dostawca: Google Ireland Limited) w celu tworzenia zbiorczych, anonimowych statystyk ruchu, które pomagają rozwijać stronę. Skrypt Google Analytics jest wczytywany dopiero po wyrażeniu przez użytkownika zgody na cookies analityczne w banerze. Do czasu wyrażenia zgody żadne dane nie są wysyłane do Google (mechanizm Google Consent Mode). Analityka działa ze skróconym adresem IP. Serwis nie korzysta z pikseli reklamowych, remarketingu ani reklamowych funkcji Google Analytics, takich jak Google Signals.
 
 ## 8. Informacja o plikach cookies
 
@@ -82,7 +84,11 @@ Pliki cookies (tzw. "ciasteczka") to dane informatyczne, w szczególności pliki
 
 Przy pierwszej wizycie w Serwisie wyświetlany jest baner z prośbą o zgodę na wykorzystanie plików cookies. Decyzja użytkownika (akceptacja lub odrzucenie) jest zapamiętywana w jego przeglądarce.
 
-Pliki cookies zapisywane bezpośrednio przez Serwis służą wyłącznie zapamiętaniu tej decyzji.
+Serwis wykorzystuje dwie kategorie plików cookies i podobnych technologii przechowywania:
+
+Niezbędne: pojedynczy wpis w pamięci przeglądarki (localStorage), który zapamiętuje decyzję użytkownika w sprawie cookies. Zapisywany zawsze, niezależnie od zgody.
+
+Analityczne: pliki cookies Google Analytics 4 o nazwach _ga oraz _ga_ z identyfikatorem strumienia, zapisywane dopiero po wyrażeniu zgody. Służą rozróżnianiu użytkowników i sesji na potrzeby statystyk. Okres przechowywania wynosi do 13 miesięcy. Zgodę można w każdej chwili wycofać w sposób opisany w punkcie 9.
 
 Czcionki wykorzystywane w Serwisie (Google Fonts) są ładowane z serwerów Google Inc., co wiąże się z przesłaniem do Google adresu IP użytkownika w momencie wczytania strony.
 
@@ -91,3 +97,5 @@ Czcionki wykorzystywane w Serwisie (Google Fonts) są ładowane z serwerów Goog
 Przeglądarka internetowa zazwyczaj domyślnie dopuszcza przechowywanie plików cookies w urządzeniu końcowym Użytkownika. Użytkownik może samodzielnie zmienić ustawienia dotyczące cookies, w tym je zablokować lub usunąć, korzystając z ustawień swojej przeglądarki.
 
 Ograniczenie stosowania plików cookies może wpłynąć na niektóre funkcjonalności dostępne w Serwisie.
+
+Zgodę na cookies analityczne można wycofać, usuwając dane witryny (w tym zawartość localStorage) w ustawieniach przeglądarki. Przy kolejnej wizycie baner zgody pojawi się ponownie i będzie można podjąć nową decyzję. Wycofanie zgody nie wpływa na zgodność z prawem przetwarzania, którego dokonano przed jej wycofaniem.

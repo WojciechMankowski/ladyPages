@@ -1,23 +1,31 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useAnalytics } from '../composables/useAnalytics';
 
 const STORAGE_KEY = 'cookie-consent';
 
 const visible = ref(false);
 
+const { grantAnalyticsConsent, denyAnalyticsConsent } = useAnalytics();
+
 onMounted(() => {
   const saved = localStorage.getItem(STORAGE_KEY);
   visible.value = saved !== 'accepted' && saved !== 'rejected';
+  if (saved === 'accepted') {
+    grantAnalyticsConsent();
+  }
 });
 
 const accept = () => {
   localStorage.setItem(STORAGE_KEY, 'accepted');
   visible.value = false;
+  grantAnalyticsConsent();
 };
 
 const reject = () => {
   localStorage.setItem(STORAGE_KEY, 'rejected');
   visible.value = false;
+  denyAnalyticsConsent();
 };
 </script>
 
