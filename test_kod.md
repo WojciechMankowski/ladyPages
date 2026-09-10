@@ -4,9 +4,9 @@
 
 **Zaimplementowane i uruchamialne.** Kod poniżej to kopia dokumentacyjna testów, które faktycznie żyją w projekcie jako prawdziwe pliki:
 
-- `src/composables/useSubscribe.spec.ts`, `src/composables/useAnalytics.spec.ts` — testy jednostkowe (Vitest)
-- `src/components/{Header,Hero,Contact,Footer,MobileCta,CookieConsent}.spec.ts` — testy komponentów (Vitest + `@vue/test-utils`, `jsdom`)
-- `e2e/signup.spec.ts` — testy E2E (Playwright, `playwright.config.ts`)
+- `src/composables/useSubscribe.spec.ts`, `src/composables/useAnalytics.spec.ts`, `src/composables/useBonusAccess.spec.ts` — testy jednostkowe (Vitest)
+- `src/components/{Header,Hero,Contact,Footer,MobileCta,CookieConsent}.spec.ts`, `src/pages/{DodatekPage,BonusContent}.spec.ts` — testy komponentów (Vitest + `@vue/test-utils`, `jsdom`)
+- `e2e/signup.spec.ts`, `e2e/dodatek.spec.ts` — testy E2E (Playwright, `playwright.config.ts`)
 
 Uruchamianie:
 
@@ -664,9 +664,226 @@ describe('useAnalytics — denyAnalyticsConsent', () => {
 
 ---
 
+## 2b. Testy jednostkowe — `src/composables/useBonusAccess.ts` [UNIT]
+
+Logika dostępu do strony dodatku (`/dodatek`). Odczytuje parametr `?src`, porównuje ze zbiorem `ALLOWED_SRC` (`email`, `ml`, `newsletter`), normalizuje wielkość liter. Prawidłowe wejście utrwala odblokowanie w `localStorage` pod `bonus_unlocked=1`, więc powrót na goły adres nie odbiera dostępu. `search` i `storage` są wstrzykiwane w opcjach (fake `Storage`), więc test nie potrzebuje nawigacji jsdom. Odczyt/zapis storage jest w `try/catch` (tryb prywatny). 8 przypadków.
+
+```ts
+// src/composables/useBonusAccess.spec.ts
+import { describe, it, expect } from 'vitest';
+import { useBonusAccess, UNLOCK_STORAGE_KEY } from './useBonusAccess';
+
+// Minimalny, izolowany zamiennik localStorage do testów (bez jsdom Storage).
+function fakeStorage(initial: Record<string, string> = {}): Storage {
+  const map = new Map<string, string>(Object.entries(initial));
+  return {
+    get length() {
+      return map.size;
+    },
+    clear: () => map.clear(),
+    getItem: (k: string) => (map.has(k) ? map.get(k)! : null),
+    key: (i: number) => Array.from(map.keys())[i] ?? null,
+    removeItem: (k: string) => void map.delete(k),
+    setItem: (k: string, v: string) => void map.set(k, String(v)),
+  };
+}
+
+describe('useBonusAccess — wejście bez parametru', () => {
+  it('nie daje dostępu i raportuje źródło "direct"', () => {
+    const storage = fakeStorage();
+    const { src, hasAccess, sourceLabel } = useBonusAccess({ search: '', storage });
+
+    expect(hasAccess.value).toBe(false);
+    expect(src.value).toBe('');
+    expect(sourceLabel.value).toBe('direct');
+    expect(storage.getItem(UNLOCK_STORAGE_KEY)).toBeNull();
+  });
+});
+
+describe('useBonusAccess — wejście ze znanym ?src', () => {
+  it('daje dostęp dla ?src=email i zapamiętuje odblokowanie', () => {
+    const storage = fakeStorage();
+    const { src, hasAccess, sourceLabel } = useBonusAccess({
+      search: '?src=email',
+      storage,
+    });
+
+    expect(hasAccess.value).toBe(true);
+    expect(src.value).toBe('email');
+    expect(sourceLabel.value).toBe('email');
+    expect(storage.getItem(UNLOCK_STORAGE_KEY)).toBe('1');
+  });
+
+  it('normalizuje wielkość liter w ?src (EMAIL => email)', () => {
+    const storage = fakeStorage();
+    const { hasAccess } = useBonusAccess({ search: '?src=EMAIL', storage });
+
+    expect(hasAccess.value).toBe(true);
+  });
+
+  it('akceptuje też zapasowe wartości ?src=ml i ?src=newsletter', () => {
+    expect(
+      useBonusAccess({ search: '?src=ml', storage: fakeStorage() }).hasAccess.value,
+    ).toBe(true);
+    expect(
+      useBonusAccess({ search: '?src=newsletter', storage: fakeStorage() }).hasAccess
+        .value,
+    ).toBe(true);
+  });
+});
+
+describe('useBonusAccess — nieznany ?src', () => {
+  it('nie daje dostępu i nie rusza storage', () => {
+    const storage = fakeStorage();
+    const { src, hasAccess, sourceLabel } = useBonusAccess({
+      search: '?src=facebook',
+      storage,
+    });
+
+    expect(hasAccess.value).toBe(false);
+    expect(src.value).toBe('facebook');
+    expect(sourceLabel.value).toBe('facebook');
+    expect(storage.getItem(UNLOCK_STORAGE_KEY)).toBeNull();
+  });
+});
+
+describe('useBonusAccess — zapamiętane odblokowanie', () => {
+  it('daje dostęp bez parametru, gdy storage ma zapis odblokowania', () => {
+    const storage = fakeStorage({ [UNLOCK_STORAGE_KEY]: '1' });
+    const { hasAccess, sourceLabel } = useBonusAccess({ search: '', storage });
+
+    expect(hasAccess.value).toBe(true);
+    expect(sourceLabel.value).toBe('direct');
+  });
+});
+
+describe('useBonusAccess — brak dostępu do storage', () => {
+  it('nie wyrzuca, gdy storage rzuca wyjątkiem (tryb prywatny)', () => {
+    const throwingStorage = {
+      getItem: () => {
+        throw new Error('denied');
+      },
+      setItem: () => {
+        throw new Error('denied');
+      },
+    } as unknown as Storage;
+
+    expect(() =>
+      useBonusAccess({ search: '?src=email', storage: throwingStorage }),
+    ).not.toThrow();
+    expect(
+      useBonusAccess({ search: '?src=email', storage: throwingStorage }).hasAccess.value,
+    ).toBe(true);
+  });
+});
+```
+
+---
+
+## 2c. Testy komponentów — strona dodatku [COMPONENT]
+
+`src/pages/BonusContent.vue` (treść instrukcji, tryb `full` / `teaser`) oraz `src/pages/DodatekPage.vue` (shell: rozgałęzienie dostępu + brama zapisu). W teście `DodatekPage` mockujemy `vue-gtag` (`event()` w `onMounted`) oraz `../composables/useBonusAccess`, żeby sterować `hasAccess` bez nawigacji. Formularz bramy reużywa `useSubscribe` (te same walidacje, id z prefiksem `bonus-`).
+
+```ts
+// src/pages/BonusContent.spec.ts
+import { describe, it, expect } from 'vitest';
+import { mount } from '@vue/test-utils';
+import BonusContent from './BonusContent.vue';
+
+describe('BonusContent.vue', () => {
+  it('renderuje wstęp i pierwszy krok z numerowaną listą', () => {
+    const wrapper = mount(BonusContent);
+
+    expect(wrapper.find('.bonus-intro').exists()).toBe(true);
+    const steps = wrapper.findAll('.bonus-step');
+    expect(steps.length).toBeGreaterThanOrEqual(1);
+    expect(steps[0].find('ol').exists()).toBe(true);
+    expect(steps[0].text()).toContain('Utwórz zespół w Teams');
+  });
+
+  it('w trybie "full" pokazuje adnotację o dopisywaniu kolejnych kroków', () => {
+    const wrapper = mount(BonusContent, { props: { mode: 'full' } });
+    expect(wrapper.find('.bonus-wip').exists()).toBe(true);
+  });
+
+  it('w trybie "teaser" nie pokazuje adnotacji o kolejnych krokach', () => {
+    const wrapper = mount(BonusContent, { props: { mode: 'teaser' } });
+    expect(wrapper.find('.bonus-wip').exists()).toBe(false);
+  });
+});
+```
+
+```ts
+// src/pages/DodatekPage.spec.ts
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { ref } from 'vue';
+import { mount } from '@vue/test-utils';
+
+vi.mock('vue-gtag', () => ({
+  event: vi.fn(),
+  addGtag: vi.fn(() => Promise.resolve()),
+  consent: vi.fn(),
+}));
+
+const mockHasAccess = ref(false);
+vi.mock('../composables/useBonusAccess', () => ({
+  useBonusAccess: () => ({
+    src: ref(''),
+    hasAccess: mockHasAccess,
+    sourceLabel: ref('direct'),
+  }),
+}));
+
+import DodatekPage from './DodatekPage.vue';
+
+beforeEach(() => {
+  mockHasAccess.value = false;
+});
+
+describe('DodatekPage.vue — wejście z prawidłowym linkiem (hasAccess)', () => {
+  it('pokazuje pełną treść instrukcji i nie renderuje bramy zapisu', () => {
+    mockHasAccess.value = true;
+    const wrapper = mount(DodatekPage);
+
+    expect(wrapper.find('.bonus-wip').exists()).toBe(true);
+    expect(wrapper.find('.bonus-gate').exists()).toBe(false);
+    expect(wrapper.find('#bonus-email').exists()).toBe(false);
+  });
+});
+
+describe('DodatekPage.vue — wejście bez linku (brak dostępu)', () => {
+  it('pokazuje zajawkę oraz formularz zapisu z polami bonus-*', () => {
+    const wrapper = mount(DodatekPage);
+
+    expect(wrapper.find('.bonus-gate').exists()).toBe(true);
+    expect(wrapper.find('#bonus-name').exists()).toBe(true);
+    expect(wrapper.find('#bonus-email').exists()).toBe(true);
+    expect(wrapper.find('#bonus-consent').exists()).toBe(true);
+
+    expect(wrapper.text()).toContain('Utwórz zespół w Teams');
+    expect(wrapper.find('.bonus-wip').exists()).toBe(false);
+  });
+
+  it('waliduje formularz zapisu bez zaznaczonej zgody', async () => {
+    const wrapper = mount(DodatekPage);
+
+    await wrapper.get('#bonus-name').setValue('Krystyna');
+    await wrapper.get('#bonus-email').setValue('krystyna@firma.pl');
+    await wrapper.get('.bonus-form').trigger('submit.prevent');
+    await wrapper.vm.$nextTick();
+
+    expect(wrapper.get('#bonus-consent-error').text()).toBe(
+      'Zaznacz zgodę, aby otrzymać materiały.',
+    );
+  });
+});
+```
+
+---
+
 ## 3. Testy E2E [E2E]
 
-Playwright, ścieżki krytyczne oparte na sekcji 17 („Regresja”) z `test_frontend.md`. Żądanie do MailerLite jest przechwytywane przez `page.route()`. 5 scenariuszy, wszystkie zielone.
+Playwright, ścieżki krytyczne oparte na sekcji 17 („Regresja”) z `test_frontend.md`. Żądanie do MailerLite jest przechwytywane przez `page.route()`. 5 scenariuszy w `signup.spec.ts` + 4 w `dodatek.spec.ts`.
 
 ```ts
 // e2e/signup.spec.ts
@@ -778,6 +995,88 @@ test.describe('Niezależność formularzy Hero i Contact', () => {
 
     await expect(page.locator('#final-name')).toHaveValue('');
     await expect(page.locator('#final-email')).toHaveValue('');
+  });
+});
+```
+
+### `e2e/dodatek.spec.ts` — strona dodatku `/dodatek`
+
+W dev/E2E strona jest pod `/dodatek.html` (czysty URL `/dodatek` to funkcja Cloudflare Pages na produkcji). Sprawdza obie ścieżki wejścia (`?src=email` vs goły adres), utrwalanie odblokowania w `localStorage`, wysyłkę formularza bramy na zmockowanym MailerLite oraz `meta robots noindex`.
+
+```ts
+// e2e/dodatek.spec.ts
+import { test, expect, type Page } from '@playwright/test';
+
+async function dismissCookieBanner(page: Page) {
+  const banner = page.locator('.cookie-consent');
+  if (await banner.isVisible().catch(() => false)) {
+    await banner.getByRole('button', { name: 'Akceptuj' }).click();
+  }
+}
+
+async function mockMailerLite(page: Page) {
+  await page.route('https://assets.mailerlite.com/jsonp/**', async (route) => {
+    const url = new URL(route.request().url());
+    const callback = url.searchParams.get('callback');
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/javascript',
+      body: `${callback}({success:true})`,
+    });
+  });
+}
+
+test.describe('Strona dodatku — wejście z ?src', () => {
+  test('4.1 ?src=email pokazuje pełną instrukcję bez bramy zapisu', async ({ page }) => {
+    await page.goto('/dodatek.html?src=email');
+    await dismissCookieBanner(page);
+
+    await expect(page.locator('h1')).toHaveText(
+      'Jak zamienić wiadomość z Teams w zadanie w Planerze',
+    );
+    await expect(page.locator('.bonus-wip')).toBeVisible();
+    await expect(page.locator('.bonus-gate')).toHaveCount(0);
+
+    await page.goto('/dodatek.html');
+    await expect(page.locator('.bonus-gate')).toHaveCount(0);
+    await expect(page.locator('.bonus-wip')).toBeVisible();
+  });
+});
+
+test.describe('Strona dodatku — wejście bez ?src', () => {
+  test('4.2 goły adres pokazuje zajawkę i formularz zapisu', async ({ page }) => {
+    await page.goto('/dodatek.html');
+    await dismissCookieBanner(page);
+
+    await expect(page.locator('.bonus-gate')).toBeVisible();
+    await expect(page.locator('#bonus-name')).toBeVisible();
+    await expect(page.getByText('Utwórz zespół w Teams')).toBeVisible();
+    await expect(page.locator('.bonus-wip')).toHaveCount(0);
+  });
+
+  test('4.3 wypełnienie formularza zapisu kończy się komunikatem sukcesu', async ({ page }) => {
+    await mockMailerLite(page);
+    await page.goto('/dodatek.html');
+    await dismissCookieBanner(page);
+
+    await page.fill('#bonus-name', 'Krystyna');
+    await page.fill('#bonus-email', 'krystyna@firma.pl');
+    await page.check('#bonus-consent');
+    await page.click('.bonus-form button[type="submit"]');
+
+    await expect(page.locator('.bonus-form .form-status.success')).toContainText(
+      'Gotowe!',
+    );
+  });
+});
+
+test.describe('Strona dodatku — SEO', () => {
+  test('4.4 strona ma meta robots noindex', async ({ page }) => {
+    await page.goto('/dodatek.html');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      /noindex/,
+    );
   });
 });
 ```
