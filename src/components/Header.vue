@@ -95,7 +95,7 @@ onUnmounted(() => {
           <Moon v-else />
         </button>
 
-        <a href="#contact" class="btn btn-secondary btn-nav">Odbierz Ebook</a>
+        <a href="#contact" class="btn btn-secondary btn-nav">Zapisz się!</a>
         <button class="mobile-nav-toggle" id="navToggle" @click="toggleMenu" :aria-label="isMenuOpen ? 'Zamknij menu' : 'Otwórz menu'" :aria-expanded="isMenuOpen" aria-controls="mainNav">
           <X v-if="isMenuOpen" />
           <Menu v-else />

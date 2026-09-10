@@ -1,9 +1,9 @@
 import { createApp } from 'vue'
 import { createGtag } from 'vue-gtag'
 import './style.css'
-import App from './App.vue'
+import DodatekPage from './pages/DodatekPage.vue'
 
-const app = createApp(App)
+const app = createApp(DodatekPage)
 
 const gaId = (import.meta.env.VITE_GA_ID ?? '').trim()
 if (gaId) {
