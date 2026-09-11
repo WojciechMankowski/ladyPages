@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { event } from 'vue-gtag';
-import { ArrowLeft, Check, Loader, Lock } from '@lucide/vue';
+import { ArrowLeft, Check, Loader, Lock, Sun, Moon } from '@lucide/vue';
 import BonusContent from './BonusContent.vue';
 import CookieConsent from '../components/CookieConsent.vue';
 import { useBonusAccess } from '../composables/useBonusAccess';
 import { useSubscribe } from '../composables/useSubscribe';
+import { useTheme } from '../composables/useTheme';
 
 const { hasAccess, sourceLabel } = useBonusAccess();
+const { isDark, toggleTheme } = useTheme();
 
 const {
   name,
@@ -39,7 +41,13 @@ onMounted(() => {
     <header class="site-header">
       <div class="container">
         <a href="/" class="logo"><span class="logo-accent">&lt;</span>WM<span class="logo-accent"> /&gt;</span></a>
-        <a href="/" class="back-link"><ArrowLeft class="back-icon" /><span>Powrót do strony głównej</span></a>
+        <div class="header-actions">
+          <button class="theme-toggle" @click="toggleTheme" :aria-label="isDark ? 'Przełącz na tryb jasny' : 'Przełącz na tryb ciemny'">
+            <Sun v-if="isDark" />
+            <Moon v-else />
+          </button>
+          <a href="/" class="back-link"><ArrowLeft class="back-icon" /><span>Powrót do strony głównej</span></a>
+        </div>
       </div>
     </header>
 
@@ -204,6 +212,12 @@ onMounted(() => {
 
 .logo-accent {
   color: var(--primary);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .back-link {

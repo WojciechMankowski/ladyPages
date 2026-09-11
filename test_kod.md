@@ -4,7 +4,7 @@
 
 **Zaimplementowane i uruchamialne.** Kod poniżej to kopia dokumentacyjna testów, które faktycznie żyją w projekcie jako prawdziwe pliki:
 
-- `src/composables/useSubscribe.spec.ts`, `src/composables/useAnalytics.spec.ts`, `src/composables/useBonusAccess.spec.ts` — testy jednostkowe (Vitest)
+- `src/composables/useSubscribe.spec.ts`, `src/composables/useAnalytics.spec.ts`, `src/composables/useBonusAccess.spec.ts`, `src/composables/useTheme.spec.ts` — testy jednostkowe (Vitest)
 - `src/components/{Header,Hero,Contact,Footer,MobileCta,CookieConsent}.spec.ts`, `src/pages/{DodatekPage,BonusContent}.spec.ts` — testy komponentów (Vitest + `@vue/test-utils`, `jsdom`)
 - `e2e/signup.spec.ts`, `e2e/dodatek.spec.ts` — testy E2E (Playwright, `playwright.config.ts`)
 
@@ -849,10 +849,40 @@ vi.mock('../composables/useBonusAccess', () => ({
   }),
 }));
 
+// useTheme (przełącznik motywu w nagłówku) woła window.matchMedia — jsdom go nie
+// implementuje domyślnie, więc mockujemy tak samo, jak w Header.spec.ts.
+function mockMatchMedia(prefersDark: boolean) {
+  window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+    matches: query === '(prefers-color-scheme: dark)' ? prefersDark : false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+}
+
 import DodatekPage from './DodatekPage.vue';
 
 beforeEach(() => {
   mockHasAccess.value = false;
+  localStorage.clear();
+  document.documentElement.classList.remove('light');
+  mockMatchMedia(true);
+});
+
+describe('DodatekPage.vue — przełącznik motywu', () => {
+  it('renderuje przełącznik motywu w nagłówku i przełącza klasę "light" na <html>', async () => {
+    const wrapper = mount(DodatekPage);
+    const toggle = wrapper.get('.theme-toggle');
+
+    await toggle.trigger('click');
+
+    expect(document.documentElement.classList.contains('light')).toBe(true);
+    expect(localStorage.getItem('theme')).toBe('light');
+  });
 });
 
 describe('DodatekPage.vue — wejście z prawidłowym linkiem (hasAccess)', () => {
@@ -890,6 +920,80 @@ describe('DodatekPage.vue — wejście bez linku (brak dostępu)', () => {
     expect(wrapper.get('#bonus-consent-error').text()).toBe(
       'Zaznacz zgodę, aby otrzymać materiały.',
     );
+  });
+});
+```
+
+---
+
+## 2d. Testy jednostkowe — `src/composables/useTheme.ts` [UNIT]
+
+Wspólna logika przełącznika motywu (jasny/ciemny), wydzielona z `Header.vue` i reużyta w `DodatekPage.vue`. Bazuje na `onMounted`/`onUnmounted`, więc testujemy ją przez mały komponent-hosta zamiast wołać composable bezpośrednio.
+
+```ts
+// src/composables/useTheme.spec.ts
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { defineComponent, h } from 'vue';
+import { mount } from '@vue/test-utils';
+import { useTheme } from './useTheme';
+
+function mockMatchMedia(prefersDark: boolean) {
+  window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+    matches: query === '(prefers-color-scheme: dark)' ? prefersDark : false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+}
+
+const Host = defineComponent({
+  setup() {
+    const { isDark, toggleTheme } = useTheme();
+    return () =>
+      h('button', { class: 'toggle', onClick: toggleTheme }, isDark.value ? 'dark' : 'light');
+  },
+});
+
+describe('useTheme', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    document.documentElement.classList.remove('light');
+  });
+
+  it('bez zapisanego motywu i bez preferencji systemowej "dark" startuje w trybie jasnym', () => {
+    mockMatchMedia(false);
+    mount(Host);
+
+    expect(document.documentElement.classList.contains('light')).toBe(true);
+  });
+
+  it('bez zapisanego motywu, z preferencją systemową "dark" startuje w trybie ciemnym', () => {
+    mockMatchMedia(true);
+    mount(Host);
+
+    expect(document.documentElement.classList.contains('light')).toBe(false);
+  });
+
+  it('respektuje zapisany w localStorage motyw "light" mimo preferencji systemowej "dark"', () => {
+    localStorage.setItem('theme', 'light');
+    mockMatchMedia(true);
+    mount(Host);
+
+    expect(document.documentElement.classList.contains('light')).toBe(true);
+  });
+
+  it('toggleTheme przełącza klasę "light" na <html> i zapisuje wybór w localStorage', async () => {
+    mockMatchMedia(true);
+    const wrapper = mount(Host);
+
+    await wrapper.get('.toggle').trigger('click');
+
+    expect(document.documentElement.classList.contains('light')).toBe(true);
+    expect(localStorage.getItem('theme')).toBe('light');
   });
 });
 ```

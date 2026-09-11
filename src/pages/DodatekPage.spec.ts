@@ -10,6 +10,21 @@ vi.mock('vue-gtag', () => ({
   consent: vi.fn(),
 }));
 
+// useTheme (przełącznik motywu w nagłówku) woła window.matchMedia — jsdom go nie
+// implementuje domyślnie, więc mockujemy tak samo, jak w Header.spec.ts.
+function mockMatchMedia(prefersDark: boolean) {
+  window.matchMedia = vi.fn().mockImplementation((query: string) => ({
+    matches: query === '(prefers-color-scheme: dark)' ? prefersDark : false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  }));
+}
+
 // useBonusAccess podmieniamy per-test, żeby sterować dostępem bez nawigacji jsdom.
 // Nazwa z prefiksem `mock` — wymóg hoistingu vi.mock.
 const mockHasAccess = ref(false);
@@ -25,6 +40,21 @@ import DodatekPage from './DodatekPage.vue';
 
 beforeEach(() => {
   mockHasAccess.value = false;
+  localStorage.clear();
+  document.documentElement.classList.remove('light');
+  mockMatchMedia(true);
+});
+
+describe('DodatekPage.vue — przełącznik motywu', () => {
+  it('renderuje przełącznik motywu w nagłówku i przełącza klasę "light" na <html>', async () => {
+    const wrapper = mount(DodatekPage);
+    const toggle = wrapper.get('.theme-toggle');
+
+    await toggle.trigger('click');
+
+    expect(document.documentElement.classList.contains('light')).toBe(true);
+    expect(localStorage.getItem('theme')).toBe('light');
+  });
 });
 
 describe('DodatekPage.vue — wejście z prawidłowym linkiem (hasAccess)', () => {
