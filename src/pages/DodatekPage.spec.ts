@@ -32,7 +32,7 @@ describe('DodatekPage.vue — wejście z prawidłowym linkiem (hasAccess)', () =
     mockHasAccess.value = true;
     const wrapper = mount(DodatekPage);
 
-    expect(wrapper.find('.bonus-wip').exists()).toBe(true);
+    expect(wrapper.find('.bonus-errors').exists()).toBe(true);
     expect(wrapper.find('.bonus-gate').exists()).toBe(false);
     expect(wrapper.find('#bonus-email').exists()).toBe(false);
   });
@@ -47,9 +47,9 @@ describe('DodatekPage.vue — wejście bez linku (brak dostępu)', () => {
     expect(wrapper.find('#bonus-email').exists()).toBe(true);
     expect(wrapper.find('#bonus-consent').exists()).toBe(true);
 
-    // zajawka pokazuje pierwszy krok, ale nie adnotację o kolejnych krokach
+    // zajawka pokazuje tylko pierwszy krok, nie dalszą część instrukcji
     expect(wrapper.text()).toContain('Utwórz zespół w Teams');
-    expect(wrapper.find('.bonus-wip').exists()).toBe(false);
+    expect(wrapper.find('.bonus-errors').exists()).toBe(false);
   });
 
   it('waliduje formularz zapisu bez zaznaczonej zgody', async () => {

@@ -29,13 +29,13 @@ test.describe('Strona dodatku — wejście z ?src', () => {
     await expect(page.locator('h1')).toHaveText(
       'Jak zamienić wiadomość z Teams w zadanie w Planerze',
     );
-    await expect(page.locator('.bonus-wip')).toBeVisible();
+    await expect(page.locator('.bonus-errors')).toBeVisible();
     await expect(page.locator('.bonus-gate')).toHaveCount(0);
 
     // Odblokowanie jest zapamiętane: wejście na goły adres nadal pokazuje pełną treść.
     await page.goto('/dodatek.html');
     await expect(page.locator('.bonus-gate')).toHaveCount(0);
-    await expect(page.locator('.bonus-wip')).toBeVisible();
+    await expect(page.locator('.bonus-errors')).toBeVisible();
   });
 });
 
@@ -46,9 +46,9 @@ test.describe('Strona dodatku — wejście bez ?src', () => {
 
     await expect(page.locator('.bonus-gate')).toBeVisible();
     await expect(page.locator('#bonus-name')).toBeVisible();
-    // pierwszy krok jest widoczny jako zajawka, ale nie adnotacja o kolejnych krokach
+    // pierwszy krok jest widoczny jako zajawka, ale nie dalsza część instrukcji
     await expect(page.getByText('Utwórz zespół w Teams')).toBeVisible();
-    await expect(page.locator('.bonus-wip')).toHaveCount(0);
+    await expect(page.locator('.bonus-errors')).toHaveCount(0);
   });
 
   test('4.3 wypełnienie formularza zapisu kończy się komunikatem sukcesu', async ({ page }) => {

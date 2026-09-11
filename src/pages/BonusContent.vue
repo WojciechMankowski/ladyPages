@@ -1,10 +1,7 @@
 <script setup lang="ts">
 /**
  * Treść instrukcji dodatku „Jak zamienić wiadomość z Teams w zadanie w Planerze".
- *
- * Materiał powstaje etapami. Każdy krok to osobny <section class="bonus-step">,
- * więc kolejne można dopisywać bez ruszania reszty. Roboczym źródłem tekstu jest
- * `Dodatek/main.md` — po dopracowaniu krok przenosimy tutaj.
+ * Źródło tekstu: `Dodatek/main.md`.
  *
  * `mode="teaser"` pokazuje tylko wstęp i pierwszy krok (widok dla wejścia bez
  * prawidłowego linku `?src`). `mode="full"` pokazuje całość.
@@ -44,13 +41,78 @@ withDefaults(defineProps<{ mode?: 'full' | 'teaser' }>(), { mode: 'full' });
     </section>
 
     <template v-if="mode === 'full'">
-      <!-- Kolejne kroki (dodanie Plannera, zamiana wiadomości w zadanie itd.)
-           dopisujemy tutaj jako kolejne <section class="bonus-step">. -->
+      <section class="bonus-step">
+        <h2>Krok 2. Utwórz plan w Plannerze</h2>
+        <p>
+          Wejdź na
+          <a href="https://planner.cloud.microsoft/webui/myplans" target="_blank" rel="noopener noreferrer">planner.cloud.microsoft/webui/myplans</a>.
+          Kliknij tworzenie nowego planu, wybierz Plan podstawowy i potwierdź
+          przyciskiem Utwórz plan podstawowy. Wpisz nazwę planu, a w polu
+          „Udostępnij swojej grupie" wybierz z listy zespół stworzony przed
+          chwilą.
+        </p>
+        <p class="bonus-note">
+          Tego pola nie pomijaj. Bez niego plan trafia do twoich zadań
+          osobistych, a przepływ z Teams go nie zobaczy.
+        </p>
+        <p>
+          Kliknij Utwórz plan podstawowy. Plan pojawi się też w Teams,
+          w zakładce twojego zespołu.
+        </p>
+      </section>
 
-      <p class="bonus-wip">
-        Kolejne kroki dodajemy na bieżąco. Masz już dostęp, więc wróć tu za jakiś
-        czas po dalszą część instrukcji.
-      </p>
+      <section class="bonus-step">
+        <h2>Krok 3. Utwórz przepływ z wiadomości</h2>
+        <p>
+          Wróć do Teams. Wybierz jedną ze swoich wiadomości, tę, z której
+          chcesz stworzyć zadanie w Plannerze, i wykonaj:
+        </p>
+        <ol>
+          <li>Najedź na wiadomość, pojawi się pasek z emotkami reakcji.</li>
+          <li>Kliknij ikonę trzech kropek.</li>
+          <li>Wybierz Więcej działań.</li>
+          <li>Wybierz Utwórz przepływ pracy.</li>
+          <li>Wybierz szablon „Utwórz zadanie w programie Planner na podstawie wiadomości".</li>
+          <li>Wybierz grupę (ten sam zespół, co w kroku 2).</li>
+          <li>Wybierz planer.</li>
+        </ol>
+      </section>
+
+      <section class="bonus-step">
+        <h2>Krok 4. Przetestuj przepływ</h2>
+        <p>
+          Najedź na wybraną wiadomość — od razu powinieneś zauważyć przepływ
+          o nazwie „Utwórz zadanie w programie Planner na podstawie
+          wiadomości". Jeśli nie zauważysz go w tym miejscu, najedź na Więcej
+          działań i szukaj pod tą samą nazwą.
+        </p>
+        <p>
+          Kliknij w niego i uzupełnij dane w wyskakującym oknie. Teraz przejdź
+          w Teams do aplikacji Planner i sprawdź, czy zadanie na podstawie
+          wiadomości zostało dodane.
+        </p>
+      </section>
+
+      <section class="bonus-step">
+        <h2>Częste błędy</h2>
+        <ol class="bonus-errors">
+          <li><strong>Grupa nie ma jeszcze planu w Plannerze.</strong> Szablon szuka istniejącego planu przypiętego do zespołu, jeśli go nie ma, lista planów w kroku 7 jest pusta.</li>
+          <li><strong>Kanał prywatny blokuje akcję.</strong> „Utwórz przepływ pracy" z wiadomości w kanale prywatnym często kończy się błędem uprawnień, bo połączenie Teams-Planner nie ma dostępu do takich kanałów.</li>
+          <li><strong>Polityka DLP blokuje połączenie konektorów.</strong> Administrator może ustawić regułę Data Loss Prevention, która nie pozwala łączyć konektora Teams z Plannerem w jednym przepływie, wtedy zapis kończy się błędem.</li>
+          <li><strong>Usunięcie wiadomości nie usuwa zadania.</strong> Zadanie w Plannerze i wiadomość w Teams nie są ze sobą powiązane po utworzeniu, skasowanie jednego nie wpływa na drugie.</li>
+          <li><strong>Edycja wiadomości nie aktualizuje zadania.</strong> Opis zadania w Plannerze zostaje z treścią sprzed edycji, bo przepływ pobiera dane tylko raz, w momencie uruchomienia.</li>
+          <li><strong>Kilkukrotne uruchomienie na tej samej wiadomości tworzy duplikaty.</strong> Teams nie sprawdza, czy zadanie z danej wiadomości już istnieje, więc powtórne kliknięcie „Utwórz przepływ pracy" doda drugie, identyczne zadanie.</li>
+          <li><strong>Limit uruchomień w licencji.</strong> Przepływy z akcji na wiadomości liczą się do miesięcznego limitu w planie Power Automate, przy niskim planie licencyjnym (np. w ramach Microsoft 365) można go wyczerpać przy dużej liczbie zgłoszeń.</li>
+        </ol>
+      </section>
+
+      <section class="bonus-step">
+        <h2>Jak dopasować szablon do własnych potrzeb</h2>
+        <ul>
+          <li>Treść zadania po polsku, a nie po angielsku.</li>
+          <li>Dodanie daty rozpoczęcia, np. „od dziś", „od jutra".</li>
+        </ul>
+      </section>
     </template>
   </div>
 </template>
@@ -74,7 +136,8 @@ withDefaults(defineProps<{ mode?: 'full' | 'teaser' }>(), { mode: 'full' });
   margin-bottom: 14px;
 }
 
-.bonus-step ol {
+.bonus-step ol,
+.bonus-step ul {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -92,6 +155,10 @@ withDefaults(defineProps<{ mode?: 'full' | 'teaser' }>(), { mode: 'full' });
   margin-top: 10px;
 }
 
+.bonus-step a {
+  color: var(--primary-text);
+}
+
 .bonus-note {
   border-left: 3px solid var(--primary);
   padding: 10px 0 10px 14px;
@@ -100,11 +167,7 @@ withDefaults(defineProps<{ mode?: 'full' | 'teaser' }>(), { mode: 'full' });
   font-size: 0.92rem;
 }
 
-.bonus-wip {
-  margin-top: 6px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-glass);
-  font-size: 0.9rem;
-  color: var(--text-muted);
+.bonus-errors li strong {
+  color: var(--text-primary);
 }
 </style>

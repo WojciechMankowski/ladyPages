@@ -801,14 +801,29 @@ describe('BonusContent.vue', () => {
     expect(steps[0].text()).toContain('Utwórz zespół w Teams');
   });
 
-  it('w trybie "full" pokazuje adnotację o dopisywaniu kolejnych kroków', () => {
+  it('w trybie "full" pokazuje wszystkie kroki, częste błędy i dopasowanie szablonu', () => {
     const wrapper = mount(BonusContent, { props: { mode: 'full' } });
-    expect(wrapper.find('.bonus-wip').exists()).toBe(true);
+
+    const steps = wrapper.findAll('.bonus-step');
+    expect(steps.length).toBeGreaterThanOrEqual(4);
+    expect(wrapper.text()).toContain('Utwórz plan w Plannerze');
+    expect(wrapper.text()).toContain('Utwórz przepływ z wiadomości');
+    expect(wrapper.text()).toContain('Przetestuj przepływ');
+
+    expect(wrapper.find('.bonus-errors').exists()).toBe(true);
+    expect(wrapper.find('.bonus-errors').findAll('li').length).toBe(7);
+    expect(wrapper.text()).toContain('Kilkukrotne uruchomienie na tej samej wiadomości tworzy duplikaty');
+
+    expect(wrapper.text()).toContain('Jak dopasować szablon do własnych potrzeb');
+    expect(wrapper.text()).toContain('Treść zadania po polsku');
   });
 
-  it('w trybie "teaser" nie pokazuje adnotacji o kolejnych krokach', () => {
+  it('w trybie "teaser" nie pokazuje kroków poza pierwszym ani sekcji błędów', () => {
     const wrapper = mount(BonusContent, { props: { mode: 'teaser' } });
-    expect(wrapper.find('.bonus-wip').exists()).toBe(false);
+
+    expect(wrapper.findAll('.bonus-step').length).toBe(1);
+    expect(wrapper.find('.bonus-errors').exists()).toBe(false);
+    expect(wrapper.text()).not.toContain('Utwórz plan w Plannerze');
   });
 });
 ```
@@ -845,7 +860,7 @@ describe('DodatekPage.vue — wejście z prawidłowym linkiem (hasAccess)', () =
     mockHasAccess.value = true;
     const wrapper = mount(DodatekPage);
 
-    expect(wrapper.find('.bonus-wip').exists()).toBe(true);
+    expect(wrapper.find('.bonus-errors').exists()).toBe(true);
     expect(wrapper.find('.bonus-gate').exists()).toBe(false);
     expect(wrapper.find('#bonus-email').exists()).toBe(false);
   });
@@ -861,7 +876,7 @@ describe('DodatekPage.vue — wejście bez linku (brak dostępu)', () => {
     expect(wrapper.find('#bonus-consent').exists()).toBe(true);
 
     expect(wrapper.text()).toContain('Utwórz zespół w Teams');
-    expect(wrapper.find('.bonus-wip').exists()).toBe(false);
+    expect(wrapper.find('.bonus-errors').exists()).toBe(false);
   });
 
   it('waliduje formularz zapisu bez zaznaczonej zgody', async () => {
@@ -1034,12 +1049,12 @@ test.describe('Strona dodatku — wejście z ?src', () => {
     await expect(page.locator('h1')).toHaveText(
       'Jak zamienić wiadomość z Teams w zadanie w Planerze',
     );
-    await expect(page.locator('.bonus-wip')).toBeVisible();
+    await expect(page.locator('.bonus-errors')).toBeVisible();
     await expect(page.locator('.bonus-gate')).toHaveCount(0);
 
     await page.goto('/dodatek.html');
     await expect(page.locator('.bonus-gate')).toHaveCount(0);
-    await expect(page.locator('.bonus-wip')).toBeVisible();
+    await expect(page.locator('.bonus-errors')).toBeVisible();
   });
 });
 
@@ -1051,7 +1066,7 @@ test.describe('Strona dodatku — wejście bez ?src', () => {
     await expect(page.locator('.bonus-gate')).toBeVisible();
     await expect(page.locator('#bonus-name')).toBeVisible();
     await expect(page.getByText('Utwórz zespół w Teams')).toBeVisible();
-    await expect(page.locator('.bonus-wip')).toHaveCount(0);
+    await expect(page.locator('.bonus-errors')).toHaveCount(0);
   });
 
   test('4.3 wypełnienie formularza zapisu kończy się komunikatem sukcesu', async ({ page }) => {
